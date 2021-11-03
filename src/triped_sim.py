@@ -2,16 +2,10 @@ from typing import Dict, List, Callable
 import pybullet as p
 import time
 import pybullet_data
-
-physicsClient = p.connect(p.GUI)  # or p.DIRECT for non-graphical version
-p.setAdditionalSearchPath(pybullet_data.getDataPath())  # optionally
-p.setGravity(0, 0, -9.81)
-planeId = p.loadURDF("plane.urdf")
-startPos = [0, 0, 0.5]
-startOrientation = p.getQuaternionFromEuler([0, 0, 0])
+import numpy as np
 
 
-class triped:
+class SimplifiedTriped:
 
     def __init__(self, startPos, startOrientation):
         self.urdf = p.loadURDF("meshes\TriPed.urdf",
@@ -41,12 +35,16 @@ class triped:
         # disable the default velocity motors
         # and set some position control with small force
         #  to emulate joint friction/return to a rest pose
-        self.jointFrictionForce = 100
+        self.max_joint_force = 100*np.ones(p.getNumJoints(self.urdf))
         for joint in range(p.getNumJoints(self.urdf)):
-            p.setJointMotorControl2(self.urdf, joint, p.POSITION_CONTROL,
-                                    force=self.jointFrictionForce, targetPosition=0)
+            p.resetJointState(self.urdf, joint, targetValue=0)
 
     def get_virtual_state(self):
+        """Returns the position of each joint following Trip_kinematics conventions
+
+        Returns:
+            Fict[str,Dict[str,float]]: [description]
+        """
         virtual_state = {}
         for joint in range(p.getNumJoints(self.urdf)):
             dict_values = self._joint_mappings[joint]
@@ -57,6 +55,16 @@ class triped:
         return virtual_state
 
     def set_virtual_state(self, state: Dict[str, Dict[str, float]]):
+        """Sets the target position of each joint following Trip_kinematics conventions.
+        The maximum force of each joint is set according to the max_joint_force class attribute. 
+
+        Args:
+            state (Dict[str, Dict[str, float]]): valid joint states, note that not all states need
+                                                 to be supplied.
+
+        Raises:
+            ValueError: If the specified joint state is not valid
+        """
 
         if all(key in self.joint_targets.keys()for key in state.keys()):
             for joint, joint_state in state.items():
@@ -64,24 +72,31 @@ class triped:
                     state_tuple = (joint, key)
                     joint_number = self._joint_mappings.index(state_tuple)
                     p.setJointMotorControl2(self.urdf, joint_number, p.POSITION_CONTROL,
-                                            force=self.jointFrictionForce, targetPosition=value)
+                                            force=self.max_joint_force[joint_number],
+                                            targetPosition=value)
         else:
             raise ValueError('Error: One or more keys are not part of the triped state. ' +
                              'correct keys are: '+str(self.joint_targets.keys()))
 
 
-robot = triped(startPos, startOrientation)
+if __name__ == "__main__":
+    physicsClient = p.connect(p.GUI)  # or p.DIRECT for non-graphical version
+    p.setAdditionalSearchPath(pybullet_data.getDataPath())  # optionally
+    p.setGravity(0, 0, -9.81)
+    p.setPhysicsEngineParameter(numSolverIterations=1000)
+    planeId = p.loadURDF("plane.urdf")
+    startPos = [0, 0, 0.5]
+    startOrientation = p.getQuaternionFromEuler([0, 0, 0])
 
-p.setRealTimeSimulation(1)
+    robot = SimplifiedTriped(startPos, startOrientation)
 
-for i in range(10000):
-    # p.stepSimulation()
-    # for joint in range(p.getNumJoints(robot.urdf)):
-    #    print(joint, p.getJointState(robot.urdf, joint))
-    # print(robot.get_virtual_state())
-    robot.set_virtual_state({'leg0_extend_joint': {'ry': -i/1000},
-                             'leg1_extend_joint': {'ry': -i/1000},
-                             'leg2_extend_joint': {'ry': -i/1000}})
-    # print(p.getJointInfo(urdf, 1))
-    time.sleep(1./240.)
-p.disconnect()
+    for i in range(10000):
+        p.stepSimulation()
+        robot.set_virtual_state({'leg0_extend_joint': {'ry': -i/1000},
+                                'leg1_extend_joint': {'ry': -i/1000},
+                                 'leg2_extend_joint': {'ry': -i/1000}})
+        robot.set_virtual_state({'leg0_gimbal_joint': {'rx': -i/1000},
+                                'leg1_gimbal_joint': {'rx': -i/1000},
+                                 'leg2_gimbal_joint': {'rx': -i/1000}})
+        time.sleep(1./240.)
+    p.disconnect()
