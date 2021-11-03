@@ -8,8 +8,11 @@ import numpy as np
 class SimplifiedTriped:
 
     def __init__(self, startPos, startOrientation):
+        urdfFlags = p.URDF_USE_SELF_COLLISION_EXCLUDE_ALL_PARENTS
         self.urdf = p.loadURDF("meshes\TriPed.urdf",
-                               startPos, startOrientation)
+                               startPos, startOrientation,
+                               flags=urdfFlags,
+                               useFixedBase=False)
 
         # states follow trip_kinematics definition
         self.joint_targets = {'leg0_gimbal_joint': {'rx': 0, 'ry': 0, 'rz': 0},
@@ -35,7 +38,7 @@ class SimplifiedTriped:
         # disable the default velocity motors
         # and set some position control with small force
         #  to emulate joint friction/return to a rest pose
-        self.max_joint_force = 100*np.ones(p.getNumJoints(self.urdf))
+        self.max_joint_force = 10000*np.ones(p.getNumJoints(self.urdf))
         for joint in range(p.getNumJoints(self.urdf)):
             p.resetJointState(self.urdf, joint, targetValue=0)
 

@@ -53,12 +53,6 @@
             </geometry>
             <material name="drive_module_material"/>
         </visual>
-        <collision>
-            <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
-            <geometry>
-                <mesh filename="drive_module.stl" scale="0.001 0.001 0.001"/>
-            </geometry>
-        </collision>
     </link>
     <link name="leg_1_drive_module">
         <visual>
@@ -68,12 +62,6 @@
             </geometry>
             <material name="drive_module_material"/>
         </visual>
-        <collision>
-            <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
-            <geometry>
-                <mesh filename="drive_module.stl" scale="0.001 0.001 0.001"/>
-            </geometry>
-        </collision>
     </link>
     <link name="leg_2_drive_module">
         <visual>
@@ -83,12 +71,6 @@
             </geometry>
             <material name="drive_module_material"/>
         </visual>
-        <collision>
-            <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
-            <geometry>
-                <mesh filename="drive_module.stl" scale="0.001 0.001 0.001"/>
-            </geometry>
-        </collision>
     </link>
 
     <link name="leg_0_open">
@@ -100,9 +82,8 @@
             <material name="extend_material"/>
         </visual>
         <collision>
-            <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
             <geometry>
-                <mesh filename="leg_linear.stl" scale="0.001 0.001 0.001"/>
+                <sphere radius="0.03"/>
             </geometry>
         </collision>
     </link>
@@ -115,9 +96,8 @@
             <material name="extend_material"/>
         </visual>
         <collision>
-            <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
             <geometry>
-                <mesh filename="leg_linear.stl" scale="0.001 0.001 0.001"/>
+                <sphere radius="0.03"/>
             </geometry>
         </collision>
     </link>
@@ -130,9 +110,8 @@
             <material name="extend_material"/>
         </visual>
         <collision>
-            <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
             <geometry>
-                <mesh filename="leg_linear.stl" scale="0.001 0.001 0.001"/>
+                <sphere radius="0.03"/>
             </geometry>
         </collision>
     </link>
