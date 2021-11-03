@@ -1,7 +1,9 @@
-from typing import Dict, List, Callable
+from typing import Dict
 import pybullet as p
 import time
 import pybullet_data
+import trip_kinematics as trip
+from trip_robots.triped import triped
 import numpy as np
 
 
@@ -88,18 +90,33 @@ if __name__ == "__main__":
     p.setGravity(0, 0, -9.81)
     p.setPhysicsEngineParameter(numSolverIterations=1000)
     planeId = p.loadURDF("plane.urdf")
-    startPos = [0, 0, 0.5]
+    startPos = [0, 0, 1.5]
     startOrientation = p.getQuaternionFromEuler([0, 0, 0])
 
     robot = SimplifiedTriped(startPos, startOrientation)
 
+    inv_kin_solver = [trip.SimpleInvKinSolver(triped, 'leg0_A_LL_Joint_FCS', update_robot=False),
+                      trip.SimpleInvKinSolver(
+                          triped, 'leg1_A_LL_Joint_FCS', update_robot=False),
+                      trip.SimpleInvKinSolver(triped, 'leg2_A_LL_Joint_FCS', update_robot=False)]
+
+    initial_pos_0 = np.array([0.4, 0,  -0.6])
+    initial_pos_1 = np.array([-0.2025, -0.35074,  -0.6])
+    initial_pos_2 = np.array([-0.2025,  0.35074,  -0.6])
+
+    poses = [initial_pos_0, initial_pos_1, initial_pos_2]
+
     for i in range(10000):
         p.stepSimulation()
-        robot.set_virtual_state({'leg0_extend_joint': {'ry': -i/1000},
-                                'leg1_extend_joint': {'ry': -i/1000},
-                                 'leg2_extend_joint': {'ry': -i/1000}})
-        robot.set_virtual_state({'leg0_gimbal_joint': {'rx': -i/1000},
-                                'leg1_gimbal_joint': {'rx': -i/1000},
-                                 'leg2_gimbal_joint': {'rx': -i/1000}})
+        for leg_number in [0, 1, 2]:
+            # + 0.3 * (1-max(1, i/1000))
+            pos_with_height = poses[leg_number] + 0.2 * \
+                np.array([np.cos(i/1000), np.sin(i/1000), 0])
+            solution = inv_kin_solver[leg_number].solve_virtual(
+                target=pos_with_height, initial_tip=triped.get_virtual_state())
+            triped.set_virtual_state(solution)
+            print(solution)
+            robot.set_virtual_state({'leg'+str(leg_number)+'_gimbal_joint': solution['leg'+str(leg_number)+'_gimbal_joint'],
+                                     'leg'+str(leg_number)+'_extend_joint': solution['leg'+str(leg_number)+'_extend_joint']})
         time.sleep(1./240.)
     p.disconnect()
