@@ -1,0 +1,68 @@
+<!-- open subchain of leg-->
+        <!-- virtual links for gimbal joint-->
+        <link name="leg_2_rotX">
+        </link>
+        <link name="leg_2_rotY">
+        </link>
+        
+    <link name="leg_2_drive_module">
+        <visual>
+            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+            <geometry>
+                <mesh filename="drive_module.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
+            <material name="drive_module_material"/>
+        </visual>
+        <collision>
+            <geometry>
+                <mesh filename="drive_module.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <link name="leg_2_open">
+        <visual>
+            <origin xyz="-1.500 0.0 0.0" rpy="0.0 0.0 0.0"/>
+            <geometry>
+                <mesh filename="leg_linear.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
+            <material name="extend_material"/>
+        </visual>
+        <collision>
+            <geometry>
+                <mesh filename="leg_linear.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <!-- Joints-->
+
+    <joint name="leg_2_LCSX" type="revolute">
+        <parent link="chassis"/>
+        <child link="leg_2_rotX"/>
+        <axis xyz="1.0 0.0 0.0"/>
+        <limit lower="-1.57079632679" upper="1.57079632679" effort="1000.0" velocity="0.5"/>
+        <origin xyz="-0.1325  0.2294967320017 0.014" rpy="0.0 0.0 -4.1887902047863905"/>
+    </joint>
+
+    <joint name="leg_2_LCSY" type="revolute">
+        <parent link="leg_2_rotX"/>
+        <child link="leg_2_rotY"/>
+        <axis xyz="0.0 1.0 0.0"/>
+        <limit lower="-1.57079632679" upper="1.57079632679" effort="1000.0" velocity="0.5"/>            
+    </joint>
+
+    <joint name="leg_2_LCSZ" type="revolute">
+        <parent link="leg_2_rotY"/>
+        <child link="leg_2_drive_module"/>
+        <axis xyz="0.0 0.0 1.0"/>
+        <limit lower="-1.57079632679" upper="1.57079632679" effort="1000.0" velocity="0.5"/>            
+    </joint>
+
+    <joint name="leg_2/extend/joint" type="revolute">
+        <parent link="leg_2_drive_module"/>
+        <child link="leg_2_open"/>
+        <axis xyz="0.0 1.0 0.0"/>
+        <limit lower="-0.48869219055" upper="0.0034906585" effort="1000.0" velocity="0.5"/>
+        <origin xyz="1.640 0.0 -0.037" rpy="0.0 -0.05235987756 0.0"/>
+    </joint>

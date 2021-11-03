@@ -1,0 +1,172 @@
+<?xml version="1.0"?>
+<robot name="triped" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <!-- Materials: set colors for parts-->
+    <material name="base_link_material">
+        <color rgba="0.0 0.0 0.0 0.0"/>
+    </material>
+    
+    <material name="chassis_material">
+        <color rgba="1.0 0.63529414 0.0 1.0"/>
+    </material>
+
+    <material name="swing_left_material">
+        <color rgba="0.18431373 0.28235295 0.34509805 1.0"/>
+    </material>
+
+    <material name="swing_right_material">
+        <color rgba="0.18431373 0.28235295 0.34509805 1.0"/>
+    </material>
+
+    <material name="extend_material">
+        <color rgba="0.60784316 0.6509804 0.05882353 1.0"/>
+    </material>
+
+    <material name="drive_module_material">
+        <color rgba="0.0 0.39607844 0.44705883 1.0"/>
+    </material>
+
+
+    <link name="base_link">
+        <visual>
+                <geometry>
+                    <cylinder radius="1.0" length="0.4"/>
+                </geometry>
+                <material name="base_link_material"/>
+        </visual>
+    </link>
+
+    <link name="chassis">
+        <visual>
+            <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+            <geometry>
+                <mesh filename="chassis.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
+            <material name="chassis_material"/>
+        </visual>
+        <collision>
+           <geometry>
+                <mesh filename="chassis.stl" scale="0.001 0.001 0.001"/>
+           </geometry>
+        </collision>
+    </link>
+
+    <!-- leg subsystem. number is the leg number [0,2] -->
+    <xacro:macro name="leg" params="number">
+        <xacro:property name="left_swing_angle" value="${(-21.4745-(120*number))*pi/180}"/>
+        <xacro:property name="right_swing_angle" value="${(21.4745-(120*number))*pi/180}"/>
+        <xacro:property name="distance" value="0.150237035756833" />
+        
+        <!-- left subchain of leg-->
+        <link name="leg_${number}_left">
+            <visual>
+                <origin xyz="0.0 0.0 0.0" rpy="0.0 ${pi/2} ${-pi/2}"/> <!--rpy = XYZ rot-->
+                <geometry>
+                    <mesh filename="output_lever.stl" scale="0.001 0.001 0.001"/>
+                </geometry>
+                <material name="swing_left_material"/>
+            </visual>
+        </link>
+
+        <!-- right subchain of leg-->
+        <link name="leg_${number}_right">
+            <visual>
+                <origin xyz="0.0 0.0 0.0" rpy="0.0 ${pi/2} ${-pi/2}"/>
+                <geometry>
+                    <mesh filename="output_lever.stl" scale="0.001 0.001 0.001"/>
+                </geometry>
+                <material name="swing_right_material"/>
+            </visual>
+        </link>
+
+        <!-- open subchain of leg-->
+            <!-- virtual links for gimbal joint-->
+            <link name="leg_${number}_rotX">
+            </link>
+            <link name="leg_${number}_rotY">
+            </link>
+            
+        <link name="leg_${number}_drive_module">
+            <visual>
+                <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+                <geometry>
+                    <mesh filename="drive_module.stl" scale="0.001 0.001 0.001"/>
+                </geometry>
+                <material name="drive_module_material"/>
+            </visual>
+        </link>
+
+        <link name="leg_${number}_open">
+            <visual>
+                <origin xyz="-1.500 0.0 0.0" rpy="0.0 0.0 0.0"/>
+                <geometry>
+                    <mesh filename="leg_linear.stl" scale="0.001 0.001 0.001"/>
+                </geometry>
+                <material name="extend_material"/>
+                <collision>
+                <geometry>
+                    <mesh filename="leg_linear.stl" scale="0.001 0.001 0.001"/>
+                </geometry>
+        </collision>
+            </visual>
+        </link>
+
+        <!-- Joints-->
+        <joint name="leg_${number}/swing/left/joint" type="revolute">
+            <parent link="chassis"/>
+            <child link="leg_${number}_left"/>
+            <axis xyz="0.0 0.0 1.0"/>
+            <limit lower="${-pi/2}" upper="${pi/2}" effort="1000.0" velocity="0.5"/>
+            <origin xyz="${distance*cos(left_swing_angle)} ${distance*sin(left_swing_angle)} -0.051" rpy="0.0 0.0 ${left_swing_angle}"/>
+        </joint>
+
+        <joint name="leg_${number}/swing/right/joint" type="revolute">
+            <parent link="chassis"/>
+            <child link="leg_${number}_right"/>
+            <axis xyz="0.0 0.0 1.0"/>
+            <limit lower="${-pi/2}" upper="${pi/2}" effort="1000.0" velocity="0.5"/>
+            <origin xyz="${distance*cos(right_swing_angle)} ${distance*sin(right_swing_angle)} -0.051" rpy="0.0 0.0 ${right_swing_angle}"/>
+        </joint>
+
+        <joint name="leg_${number}_LCSX" type="revolute">
+            <parent link="chassis"/>
+            <child link="leg_${number}_rotX"/>
+            <axis xyz="1.0 0.0 0.0"/>
+            <limit lower="${-pi/2}" upper="${pi/2}" effort="1000.0" velocity="0.5"/>
+            <origin xyz="${(0.07+0.195)*cos(-120*number*pi/180)} ${(0.07+0.195)*sin(-120*number*pi/180)} ${0.053-0.039}" rpy="0.0 0.0 ${-120*number*pi/180}"/>
+        </joint>
+
+        <joint name="leg_${number}_LCSY" type="revolute">
+            <parent link="leg_${number}_rotX"/>
+            <child link="leg_${number}_rotY"/>
+            <axis xyz="0.0 1.0 0.0"/>
+            <limit lower="${-pi/2}" upper="${pi/2}" effort="1000.0" velocity="0.5"/>            
+        </joint>
+
+        <joint name="leg_${number}_LCSZ" type="revolute">
+            <parent link="leg_${number}_rotY"/>
+            <child link="leg_${number}_drive_module"/>
+            <axis xyz="0.0 0.0 1.0"/>
+            <limit lower="${-pi/2}" upper="${pi/2}" effort="1000.0" velocity="0.5"/>            
+        </joint>
+
+        <joint name="leg_${number}/extend/joint" type="revolute">
+            <parent link="leg_${number}_drive_module"/>
+            <child link="leg_${number}_open"/>
+            <axis xyz="0.0 1.0 0.0"/>
+            <limit lower="${-28*pi/180}" upper="${0.2*pi/180}" effort="1000.0" velocity="0.5"/>
+            <origin xyz="1.640 0.0 -0.037" rpy="0.0 ${-3*pi/180} 0.0"/>
+        </joint>
+
+    </xacro:macro>
+
+    <joint name="base_to_chassis" type="fixed">
+        <parent link="base_link"/>
+        <child link="chassis"/>
+    </joint>
+
+    <xacro:leg number="0" />
+    <xacro:leg number="1" />
+    <xacro:leg number="2" />
+
+</robot>
