@@ -17,13 +17,23 @@ class SimplifiedTriped:
                                flags=urdfFlags,
                                useFixedBase=False)
 
-        # states follow trip_kinematics definition
-        self.joint_targets = {'leg0_gimbal_joint': {'rx': 0, 'ry': 0, 'rz': 0},
-                              'leg0_extend_joint': {'ry': 0},
-                              'leg1_gimbal_joint': {'rx': 0, 'ry': 0, 'rz': 0},
-                              'leg1_extend_joint': {'ry': 0},
-                              'leg2_gimbal_joint': {'rx': 0, 'ry': 0, 'rz': 0},
-                              'leg2_extend_joint': {'ry': 0}}
+        # possible virtual state joint_targets
+        self._virtual_state_shape = {'leg0_gimbal_joint': {'rx': 0, 'ry': 0, 'rz': 0},
+                                     'leg0_extend_joint': {'ry': 0},
+                                     'leg1_gimbal_joint': {'rx': 0, 'ry': 0, 'rz': 0},
+                                     'leg1_extend_joint': {'ry': 0},
+                                     'leg2_gimbal_joint': {'rx': 0, 'ry': 0, 'rz': 0},
+                                     'leg2_extend_joint': {'ry': 0}}
+
+        self._actuated_state_shape = {'leg0_swing_left': 0,
+                                      'leg0_swing_right': 0,
+                                      'leg0_extend_joint_ry': 0,
+                                      'leg1_swing_left': 0,
+                                      'leg1_swing_right': 0,
+                                      'leg1_extend_joint_ry': 0,
+                                      'leg2_swing_left': 0,
+                                      'leg2_swing_right': 0,
+                                      'leg2_extend_joint_ry': 0}
 
         self._joint_mappings = [('leg0_gimbal_joint', 'rx'),
                                 ('leg0_gimbal_joint', 'ry'),
@@ -38,11 +48,11 @@ class SimplifiedTriped:
                                 ('leg2_gimbal_joint', 'rz'),
                                 ('leg2_extend_joint', 'ry'), ]
 
-        self.kinematic_model = deepcopy(triped)
-        self.inv_kin_solver = [trip.SimpleInvKinSolver(triped, 'leg0_A_LL_Joint_FCS'),
-                               trip.SimpleInvKinSolver(
-                                   triped, 'leg1_A_LL_Joint_FCS'),
-                               trip.SimpleInvKinSolver(triped, 'leg2_A_LL_Joint_FCS')]
+        self._kinematic_model = deepcopy(triped)
+        self._inv_kin_solver = [trip.SimpleInvKinSolver(triped, 'leg0_A_LL_Joint_FCS'),
+                                trip.SimpleInvKinSolver(
+            triped, 'leg1_A_LL_Joint_FCS'),
+            trip.SimpleInvKinSolver(triped, 'leg2_A_LL_Joint_FCS')]
 
         # disable the default velocity motors
         # and set some position control with small force
@@ -52,10 +62,10 @@ class SimplifiedTriped:
             p.resetJointState(self.urdf, joint, targetValue=0)
 
     def get_virtual_state(self):
-        """Returns the position of each joint following Trip_kinematics conventions
+        """Returns the position of each joint following trip_kinematics conventions
 
         Returns:
-            Fict[str,Dict[str,float]]: [description]
+            Dict[str,Dict[str,float]]: A virtual state following trip_kinematics conventions
         """
         virtual_state = {}
         for joint in range(p.getNumJoints(self.urdf)):
@@ -78,7 +88,7 @@ class SimplifiedTriped:
             ValueError: If the specified joint state is not valid
         """
 
-        if all(key in self.joint_targets.keys()for key in target.keys()):
+        if all(key in self._virtual_state_shape.keys()for key in target.keys()):
             for joint, joint_state in target.items():
                 for key, value in joint_state.items():
                     state_tuple = (joint, key)
@@ -86,10 +96,30 @@ class SimplifiedTriped:
                     p.setJointMotorControl2(self.urdf, joint_number, p.POSITION_CONTROL,
                                             force=self.max_joint_force[joint_number],
                                             targetPosition=value)
-            self.kinematic_model.set_virtual_state(target)
+            self._kinematic_model.set_virtual_state(target)
         else:
             raise ValueError('Error: One or more keys are not part of the triped state. ' +
-                             'correct keys are: '+str(self.joint_targets.keys()))
+                             'correct keys are: '+str(self._virtual_state_shape.keys()))
+
+    def get_actuated_state(self):
+        """Returns the position of the robots actuated state as if it was controlled by its 
+            swing motors. 
+
+
+        Returns:
+            Dict[str,float]: A actuated state following trip_kinematics conventions
+        """
+        return self._kinematic_model.get_actuated_state()
+
+    def set_actuated_state(self, target):
+        if all(key in self._actuated_state_shape.keys()for key in target.keys()):
+            self._kinematic_model.set_actuated_state(target)
+            virtual_state = self._kinematic_model.get_virtual_state()
+            self.set_virtual_state(virtual_state)
+        else:
+            raise ValueError(
+                "Error: One or more keys are not part of the actuated state. correct keys are: "
+                + str(self._actuated_state_shape.keys()))
 
     def get_foot_position(self, leg_number):
         """Returns the position of a foot of the triped
@@ -100,7 +130,7 @@ class SimplifiedTriped:
         Returns:
             [type]: A 3 dimensional position.
         """
-        return trip.get_translation(trip.forward_kinematics(self.kinematic_model,
+        return trip.get_translation(trip.forward_kinematics(self._kinematic_model,
                                                             'leg'+str(leg_number)+'_A_LL_Joint_FCS'))
 
     def set_foot_position(self, leg_number, target):
@@ -112,7 +142,7 @@ class SimplifiedTriped:
             leg_number ([type]): The leg which is to be controlled, numbered from zero to two.
             target ([type]): A 3 dimensional target position.
         """
-        solution = self.inv_kin_solver[leg_number].solve_virtual(target)
+        solution = self._inv_kin_solver[leg_number].solve_virtual(target)
         self.set_virtual_state(solution)
 
 
@@ -135,12 +165,25 @@ if __name__ == "__main__":
 
     for i in range(10000):
         p.stepSimulation()
+
+        actuated_state = {'leg0_swing_left': -0.3,
+                          'leg0_swing_right': 0.3,
+                          'leg0_extend_joint_ry': -0.4,
+                          'leg1_swing_left': 0,
+                          'leg1_swing_right': 0,
+                          'leg1_extend_joint_ry': 0,
+                          'leg2_swing_left': 0,
+                          'leg2_swing_right': 0,
+                          'leg2_extend_joint_ry': 0}
+
+        robot.set_actuated_state(actuated_state)
+        '''
         for leg_number in [0, 1, 2]:
             # + 0.3 * (1-max(1, i/1000))
             pos_with_height = poses[leg_number] - 0.1 * \
                 np.array([np.cos(i/200), np.sin(i/200), 0])
             robot.set_foot_position(leg_number, pos_with_height)
             current_foot = robot.get_foot_position(leg_number)
-
+        '''
         time.sleep(1./240.)
     p.disconnect()
