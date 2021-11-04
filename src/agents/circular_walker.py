@@ -5,23 +5,23 @@ from copy import deepcopy
 
 # Functions natively found in matlab but not python:
 def angdiff(x, y):
-    return np.abs(np.atan2(np.sin(x-y), np.cos(x-y)))
+    return np.abs(np.arctan2(np.sin(x-y), np.cos(x-y)))
 
 
 def cart2pol(x, y):
     rho = np.sqrt(x**2 + y**2)
     phi = np.arctan2(y, x)
-    return(rho, phi)
+    return(phi, rho)
 
 
 def targeted_step(s, height, start, stop):
     relative_pos = stop-start
-    [rot, len] = cart2pol(relative_pos(1), relative_pos(2))
+    [rot, len] = cart2pol(relative_pos[0], relative_pos[1])
     return rotz(rot/(2*np.pi)*360)@step(s, len, height)+start
 
 
 def step(s, length, height):
-    z = height*np.exp(-(s-0.5) ^ 2/0.01)
+    z = height*np.exp(-(s-0.5) ** 2/0.01)
     x = length/(1+np.exp(-20*(s-0.5)))
     y = 0
     return np.array([x, y, z])
@@ -50,7 +50,7 @@ class CircularWalker:
                             np.array([-0.2025*1.2,  0.35074*1.2,  -0.6])]
 
         # last command velocity [v,theta] v: speed, theta: movement angle
-        self.last_vel = np.array([1, 0])
+        self.last_vel = np.array([0.1, 0])
 
         # angle at which the robot last stepped
         self.prev_step = [0, 0, 0]
@@ -70,7 +70,7 @@ class CircularWalker:
         self.swing_rad = 0.1
 
         # the command velocity [vx,vy]
-        self.cmd_vel = np.array([1, 0])
+        self.cmd_vel = np.array([0.1, 0])
 
         # the angle at which the leg should be lifted
         self.start_angle = [np.mod(2*np.pi/360 * 0 + 0*np.pi/2, 2*np.pi),
@@ -86,9 +86,11 @@ class CircularWalker:
                            np.mod(self.start_angle[2]+2*np.pi/360*self.rel_step_angle, 2*np.pi)]
 
         # the time step between which the agent is called
-        self.timestep = 0.01
+        self.timestep = 1./50.
         # how much the angle should be incremented each timestep
         self.increment = np.pi
+
+        self.height = 0.08
 
         # how high the robot should step
 
@@ -116,13 +118,13 @@ class CircularWalker:
                 self.current_state[leg_number] = 1
                 self.prev_step[leg_number] = self.angle
 
-            est_trvl = 2*abs(angdiff(self.final_angle[leg_number], init_angle))
+            est_trvl = 2*abs(angdiff(final_angle, init_angle))
             final_pos = self.initial_pos[leg_number] + \
                 self.swing_rad*np.array([np.cos(final_angle), np.sin(final_angle), 0]) + \
                 rotz(self.last_vel[1]) @ \
                 np.array([1, 0, 0])*est_trvl*self.last_vel[0]/2
             foot = targeted_step(
-                s, self.height, self.foot_pos[leg_number][0:2], final_pos)
+                s, self.height, self.foot_pos[leg_number][0:3], final_pos)
             # current_liftoff = foot_pos
             step_pos = self.initial_pos[leg_number] + rotz(
                 self.last_vel[1])@np.array([1, 0, 0])*est_trvl*self.last_vel[0]/2
@@ -135,12 +137,14 @@ class CircularWalker:
                 np.mod(self.angle, 2*np.pi) <= self.stop_angle[leg_number])
             distance_travelled = np.linalg.norm(self.step_pos[leg_number]+self.swing_rad*np.array(
                 [np.cos(self.angle), np.sin(self.angle), 0])-foot) >= 0.05
+
             if angle_in_range and distance_travelled:
                 self.current_state[leg_number] = 0
             else:
                 self.current_state[leg_number] = 1
 
-            self.foot_pos[leg_number] = np.array([foot, self.angle])
+            self.foot_pos[leg_number][0:3] = foot
+            self.foot_pos[leg_number][3] = self.angle
             # self.prev_step[leg_number] = prev_step
             self.last_vel = np.array([velocity, walking_dir])
 
@@ -153,7 +157,8 @@ class CircularWalker:
 
             foot = self.initial_pos[leg_number]+(2*np.pi+self.angle)/(
                 2*np.pi)*self.swing_rad*np.array([np.cos(0), np.sin(0), 0])
-            self.foot_pos[leg_number] = np.array([foot, 0])
+            self.foot_pos[leg_number][0:3] = foot
+            self.foot_pos[leg_number][3] = 0
             #self.prev_step[leg_number] = prev_step
 
         return foot

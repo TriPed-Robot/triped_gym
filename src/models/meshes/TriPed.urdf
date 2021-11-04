@@ -142,6 +142,11 @@
             <mass value="0.503"/>
             <inertia ixx="0.0006157" ixy="0.0" ixz="0.0" iyy="0.047" iyz="0.0" izz="0.047"/>
         </inertial>
+        <contact>
+		    <stiffness value="30000"/>
+		    <damping value="1000"/>
+		    <lateral_friction value="0.6"/>
+        </contact>
     </link>
     <link name="leg_1_open">
         <visual>
@@ -162,6 +167,11 @@
             <mass value="0.503"/>
             <inertia ixx="0.0006157" ixy="0.0" ixz="0.0" iyy="0.047" iyz="0.0" izz="0.047"/>
         </inertial>
+        <contact>
+		    <stiffness value="30000"/>
+		    <damping value="1000"/>
+		    <lateral_friction value="0.6"/>
+        </contact>
     </link>
     <link name="leg_2_open">
         <visual>
@@ -182,6 +192,11 @@
             <mass value="0.503"/>
             <inertia ixx="0.0006157" ixy="0.0" ixz="0.0" iyy="0.047" iyz="0.0" izz="0.047"/>
         </inertial>
+        <contact>
+		    <stiffness value="30000"/>
+		    <damping value="1000"/>
+		    <lateral_friction value="0.6"/>
+        </contact>
     </link>
 
     <!-- joints of the robot -->

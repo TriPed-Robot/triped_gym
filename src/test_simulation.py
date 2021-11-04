@@ -20,13 +20,13 @@ if __name__ == "__main__":
     robot = SimplifiedTriped(startPos, startOrientation)
 
     agent = CircularWalker()
-
+    p.setRealTimeSimulation(1)
     for i in range(10000):
-        p.stepSimulation()
+        # p.stepSimulation()
 
         foot_positions = agent.move_robot()
         for j in [0, 1, 2]:
             robot.set_foot_position(j, foot_positions[j])
 
-        time.sleep(1./240.)
+        time.sleep(1./200.)
     p.disconnect()
