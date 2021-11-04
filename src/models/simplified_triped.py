@@ -63,6 +63,17 @@ class SimplifiedTriped:
         for joint in range(p.getNumJoints(self.urdf)):
             p.resetJointState(self.urdf, joint, targetValue=0)
 
+    def reset_position(self, startPos, startOrientation):
+        """Resets the robots base to a specified position and orientation
+
+        Args:
+            startPos ([type]): a 3 dimensional position
+            startOrientation ([type]): a 4 dimensional quaternion representing 
+                                       the desired orientation
+        """
+        p.resetBasePositionAndOrientation(
+            self.urdf, startPos, startOrientation)
+
     def get_virtual_state(self):
         """Returns the position of each joint following trip_kinematics conventions
 
