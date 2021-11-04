@@ -1,3 +1,4 @@
+from copy import deepcopy
 from typing import Dict
 import pybullet as p
 import time
@@ -11,7 +12,7 @@ class SimplifiedTriped:
 
     def __init__(self, startPos, startOrientation):
         urdfFlags = p.URDF_USE_SELF_COLLISION_EXCLUDE_ALL_PARENTS
-        self.urdf = p.loadURDF("meshes\TriPed.urdf",
+        self.urdf = p.loadURDF("src\meshes\TriPed.urdf",
                                startPos, startOrientation,
                                flags=urdfFlags,
                                useFixedBase=False)
@@ -37,12 +38,11 @@ class SimplifiedTriped:
                                 ('leg2_gimbal_joint', 'rz'),
                                 ('leg2_extend_joint', 'ry'), ]
 
-        self.inv_kin_solver = [trip.SimpleInvKinSolver(
-            triped, 'leg0_A_LL_Joint_FCS', update_robot=False),
-            trip.SimpleInvKinSolver(
-            triped, 'leg1_A_LL_Joint_FCS', update_robot=False),
-            trip.SimpleInvKinSolver(
-            triped, 'leg2_A_LL_Joint_FCS', update_robot=False)]
+        self.kinematic_model = deepcopy(triped)
+        self.inv_kin_solver = [trip.SimpleInvKinSolver(triped, 'leg0_A_LL_Joint_FCS'),
+                               trip.SimpleInvKinSolver(
+                                   triped, 'leg1_A_LL_Joint_FCS'),
+                               trip.SimpleInvKinSolver(triped, 'leg2_A_LL_Joint_FCS')]
 
         # disable the default velocity motors
         # and set some position control with small force
@@ -68,7 +68,7 @@ class SimplifiedTriped:
 
     def set_virtual_state(self, target: Dict[str, Dict[str, float]]):
         """Sets the target position of each joint following Trip_kinematics conventions.
-        The maximum force of each joint is set according to the max_joint_force class attribute. 
+        The maximum force of each joint is set according to the max_joint_force class attribute.
 
         Args:
             target (Dict[str, Dict[str, float]]): valid joint states, note that not all states need
@@ -86,13 +86,26 @@ class SimplifiedTriped:
                     p.setJointMotorControl2(self.urdf, joint_number, p.POSITION_CONTROL,
                                             force=self.max_joint_force[joint_number],
                                             targetPosition=value)
+            self.kinematic_model.set_virtual_state(target)
         else:
             raise ValueError('Error: One or more keys are not part of the triped state. ' +
                              'correct keys are: '+str(self.joint_targets.keys()))
 
+    def get_foot_position(self, leg_number):
+        """Returns the position of a foot of the triped
+
+        Args:
+            leg_number ([type]): The leg whose footposition is dessired, numbered from zero to two.
+
+        Returns:
+            [type]: A 3 dimensional position.
+        """
+        return trip.get_translation(trip.forward_kinematics(self.kinematic_model,
+                                                            'leg'+str(leg_number)+'_A_LL_Joint_FCS'))
+
     def set_foot_position(self, leg_number, target):
         """Allows the position control of a leg of the TriPed.
-        Kinematic calculations are performed using TriP, although pybullet is also capable 
+        Kinematic calculations are performed using TriP, although pybullet is also capable
         of computing inverse kinematics.
 
         Args:
@@ -127,5 +140,7 @@ if __name__ == "__main__":
             pos_with_height = poses[leg_number] - 0.1 * \
                 np.array([np.cos(i/200), np.sin(i/200), 0])
             robot.set_foot_position(leg_number, pos_with_height)
+            current_foot = robot.get_foot_position(leg_number)
+
         time.sleep(1./240.)
     p.disconnect()
