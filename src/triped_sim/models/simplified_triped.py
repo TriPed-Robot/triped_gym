@@ -58,7 +58,7 @@ class SimplifiedTriped:
 
         # disable the default velocity motors
         # and set some position control with small force
-        #  to emulate joint friction/return to a rest pose
+        # to emulate joint friction/return to a rest pose
         self.max_joint_force = 800*np.ones(p.getNumJoints(self.urdf))
         for joint in range(p.getNumJoints(self.urdf)):
             p.resetJointState(self.urdf, joint, targetValue=0)
@@ -157,3 +157,22 @@ class SimplifiedTriped:
         """
         solution = self._inv_kin_solver[leg_number].solve_virtual(target)
         self.set_virtual_state(solution)
+
+    def set_body_state(self,orientation,leg_targets):
+        """Allows the control of a robots orientation given the position of all three legs relative
+           to a base with orientation [0,0,0]
+
+        Args:
+            orientation ([type]): Euler angles in roll pitch yaw convention
+            leg_targets ([type]): A list containing the three foot positions ordered from leg 0 to 2
+        """
+        base_to_floor=trip.Transformation('body_orientation',
+                            {'rx':orientation[0],'ry':orientation[1],'rz':orientation[2]})
+        for  leg in [0,1,2]:
+            target = leg_targets[leg]
+            foot_to_base=trip.Transformation('foot_pos',
+                                 {'tx':target[0],'ty':target[1],'tz':target[2]})
+            body_target = base_to_floor.get_transformation_matrix() \
+                         @ foot_to_base.get_transformation_matrix()
+            self.set_foot_position(leg,trip.get_translation(body_target))
+
