@@ -55,7 +55,7 @@ class CircularWalker:
         self.increment = np.pi
 
         # how high the robot should step
-        self.step_height = 0.08
+        self.step_height = 0.2
 
         # the radius of rotation
         self.swing_rad = 0.1
@@ -96,10 +96,9 @@ class CircularWalker:
         # the angle duration during which a step takes place
         self.rel_step_angle = 2*np.pi/360*60
         # the angle at which the step should touch the ground again
-        self.stop_angle = [np.mod(self.start_angle[0]+self.rel_step_angle, 2*np.pi),
-                           np.mod(self.start_angle[1] +
-                                  self.rel_step_angle, 2*np.pi),
-                           np.mod(self.start_angle[2]+self.rel_step_angle, 2*np.pi)]
+        self.stop_angle = [np.mod(self.start_angle[0] + self.rel_step_angle, 2*np.pi),
+                           np.mod(self.start_angle[1] + self.rel_step_angle, 2*np.pi),
+                           np.mod(self.start_angle[2] + self.rel_step_angle, 2*np.pi)]
 
     def _circular_offset(self, theta):
         return self.swing_rad*np.array([np.cos(theta), np.sin(theta), 0])
@@ -108,14 +107,13 @@ class CircularWalker:
         # parameterize step trajectory
         start_angle = self.pre_step_state[leg_number][3]
         stop_angle = start_angle+self.rel_step_angle
-        s = angdiff(self.angle, start_angle) / \
-            angdiff(stop_angle, start_angle)
+        s = angdiff(self.angle, start_angle) / angdiff(stop_angle, start_angle)
 
         # calculate step size
         est_trvl = 2*abs(angdiff(stop_angle, start_angle))
         final_pos = self.initial_pos[leg_number] + \
-            self._circular_offset(stop_angle) + \
-            rotz(self.last_vel[1]) * est_trvl*self.last_vel[0]/2
+                    self._circular_offset(stop_angle) + \
+                    rotz(self.last_vel[1]) * est_trvl*self.last_vel[0]/2
 
         # move foot based on trajectory parameter and step size
         foot = targeted_step(
@@ -124,12 +122,9 @@ class CircularWalker:
         return s, foot
 
     def _body_controller(self, leg_number):
-
-        # This block is redundant if the command velocity is always defined using [v,theta]
-        # this would also make it possible ot combine self.last_vel and self.cmd_vel
-
-        foot = self.post_step_state[leg_number]+self._circular_offset(self.angle)-rotz(
-            self.cmd_vel[1])*self.move_memory*self.cmd_vel[0]
+        foot = ( self.post_step_state[leg_number]
+                +self._circular_offset(self.angle) 
+                -rotz(self.cmd_vel[1])*self.cmd_vel[0]*self.move_memory[leg_number])
 
         angle_in_range = (np.mod(self.angle, 2*np.pi) >= self.start_angle[leg_number]) and (
             np.mod(self.angle, 2*np.pi) <= self.stop_angle[leg_number])
@@ -148,9 +143,8 @@ class CircularWalker:
             else:
                 self.current_state[leg_number] = 1
 
-                self.move_memory[leg_number] = 0
-                # -self._circular_offset(self.angle)
-                self.post_step_state[leg_number] = foot
+                self.move_memory[leg_number]     = 0
+                self.post_step_state[leg_number] = foot  - self._circular_offset(self.angle)
 
         elif self.current_state[leg_number] == 1:
             angle_in_range, distance_travelled, foot = self._body_controller(
@@ -178,12 +172,12 @@ class CircularWalker:
                 self.current_state[leg_number] = 1
             else:
                 self.current_state[leg_number] = 2
-
+        
         return foot
 
     def move_robot(self):
         self.angle += self.increment*self.timestep
-        print(self.post_step_state)
+ 
         return [self.single_leg_state_machine(0),
                 self.single_leg_state_machine(1),
                 self.single_leg_state_machine(2)]
