@@ -63,7 +63,7 @@ class SimplifiedTriped:
         for joint in range(p.getNumJoints(self.urdf)):
             p.resetJointState(self.urdf, joint, targetValue=0)
 
-    def reset_position(self, startPos, startOrientation):
+    def set_world_state(self, startPos, startOrientation):
         """Resets the robots base to a specified position and orientation
 
         Args:
@@ -73,6 +73,15 @@ class SimplifiedTriped:
         """
         p.resetBasePositionAndOrientation(
             self.urdf, startPos, startOrientation)
+
+    def get_world_state(self):
+        """Returns the position and orientation of the robot relative to the world
+
+        Returns:
+            [type]: a 3 dimensional position and a 4 dimensional quaternion representing 
+                                       the desired orientation
+        """
+        return p.getBasePositionAndOrientation(self.urdf)
 
     def get_virtual_state(self):
         """Returns the position of each joint following trip_kinematics conventions
@@ -175,4 +184,23 @@ class SimplifiedTriped:
             body_target = base_to_floor.get_transformation_matrix() \
                          @ foot_to_base.get_transformation_matrix()
             self.set_foot_position(leg,trip.get_translation(body_target))
+
+    def get_body_state(self):
+        """Returns the body state of a robot comprised of leg positions relative to the base and
+           the body orientation
+
+           Important: Note that the leg positions are different 
+           from the once given to set_body_target! 
+           This because they are relative to a base with [0,0,0].
+
+        Returns:
+            [type]: Euler angles in roll pitch yaw convention 
+                    and a list of 3 dimensional foot positions
+        """
+        _ , orientation = p.getBasePositionAndOrientation(self.urdf)
+        leg_state = [self.get_foot_position(leg) for leg in [0,1,2]]
+        euler_orientation = p.getEulerFromQuaternion(orientation)
+        return euler_orientation, leg_state
+
+
 

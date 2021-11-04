@@ -26,6 +26,6 @@ if __name__ == "__main__":
     p.setRealTimeSimulation(1)
     for i in range(10000):
         robot.set_body_state([0.3*np.sin(0.1*i),0.3*np.cos(0.1*i),0.3*np.sin(0.1*i)],initial_pos)
-
+        print(robot.get_body_state())
         time.sleep(1./200.)
     p.disconnect()

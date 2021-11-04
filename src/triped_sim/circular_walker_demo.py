@@ -7,6 +7,8 @@ from agents.circular_walker import CircularWalker
 
 """This short demo uses the CircularWalker gait pattern generator
    to let the TriPed walk accross a plane.
+
+   Use ctr+alt and left click to move the camera
 """
 if __name__ == "__main__":
     physicsClient = p.connect(p.GUI)  
