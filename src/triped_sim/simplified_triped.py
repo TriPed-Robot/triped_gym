@@ -12,7 +12,7 @@ class SimplifiedTriped:
     def __init__(self, startPos, startOrientation):
         urdfFlags = p.URDF_USE_SELF_COLLISION_EXCLUDE_ALL_PARENTS
         dirname = os.path.dirname(__file__)
-        urdf_file = os.path.join(dirname, 'meshes', 'TriPed.urdf')
+        urdf_file = os.path.join(dirname, 'robot_descriptions', 'TriPed.urdf')
         self.urdf = p.loadURDF(urdf_file,
                                startPos, startOrientation,
                                flags=urdfFlags,
@@ -68,7 +68,7 @@ class SimplifiedTriped:
 
         Args:
             startPos ([type]): a 3 dimensional position
-            startOrientation ([type]): a 4 dimensional quaternion representing 
+            startOrientation ([type]): a 4 dimensional quaternion representing
                                        the desired orientation
         """
         p.resetBasePositionAndOrientation(
@@ -78,7 +78,7 @@ class SimplifiedTriped:
         """Returns the position and orientation of the robot relative to the world
 
         Returns:
-            [type]: a 3 dimensional position and a 4 dimensional quaternion representing 
+            [type]: a 3 dimensional position and a 4 dimensional quaternion representing
                                        the desired orientation
         """
         return p.getBasePositionAndOrientation(self.urdf)
@@ -124,8 +124,8 @@ class SimplifiedTriped:
                              'correct keys are: '+str(self._virtual_state_shape.keys()))
 
     def get_actuated_state(self):
-        """Returns the position of the robots actuated state as if it was controlled by its 
-            swing motors. 
+        """Returns the position of the robots actuated state as if it was controlled by its
+            swing motors.
 
 
         Returns:
@@ -167,7 +167,7 @@ class SimplifiedTriped:
         solution = self._inv_kin_solver[leg_number].solve_virtual(target)
         self.set_virtual_state(solution)
 
-    def set_body_state(self,orientation,leg_targets):
+    def set_body_state(self, orientation, leg_targets):
         """Allows the control of a robots orientation given the position of all three legs relative
            to a base with orientation [0,0,0]
 
@@ -175,32 +175,29 @@ class SimplifiedTriped:
             orientation ([type]): Euler angles in roll pitch yaw convention
             leg_targets ([type]): A list containing the three foot positions ordered from leg 0 to 2
         """
-        base_to_floor=trip.Transformation('body_orientation',
-                            {'rx':orientation[0],'ry':orientation[1],'rz':orientation[2]})
-        for  leg in [0,1,2]:
+        base_to_floor = trip.Transformation('body_orientation',
+                                            {'rx': orientation[0], 'ry': orientation[1], 'rz': orientation[2]})
+        for leg in [0, 1, 2]:
             target = leg_targets[leg]
-            foot_to_base=trip.Transformation('foot_pos',
-                                 {'tx':target[0],'ty':target[1],'tz':target[2]})
+            foot_to_base = trip.Transformation('foot_pos',
+                                               {'tx': target[0], 'ty': target[1], 'tz': target[2]})
             body_target = base_to_floor.get_transformation_matrix() \
-                         @ foot_to_base.get_transformation_matrix()
-            self.set_foot_position(leg,trip.get_translation(body_target))
+                @ foot_to_base.get_transformation_matrix()
+            self.set_foot_position(leg, trip.get_translation(body_target))
 
     def get_body_state(self):
         """Returns the body state of a robot comprised of leg positions relative to the base and
            the body orientation
 
-           Important: Note that the leg positions are different 
-           from the once given to set_body_target! 
+           Important: Note that the leg positions are different
+           from the once given to set_body_target!
            This because they are relative to a base with [0,0,0].
 
         Returns:
-            [type]: Euler angles in roll pitch yaw convention 
+            [type]: Euler angles in roll pitch yaw convention
                     and a list of 3 dimensional foot positions
         """
-        _ , orientation = p.getBasePositionAndOrientation(self.urdf)
-        leg_state = [self.get_foot_position(leg) for leg in [0,1,2]]
+        _, orientation = p.getBasePositionAndOrientation(self.urdf)
+        leg_state = [self.get_foot_position(leg) for leg in [0, 1, 2]]
         euler_orientation = p.getEulerFromQuaternion(orientation)
         return euler_orientation, leg_state
-
-
-

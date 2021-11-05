@@ -1,4 +1,3 @@
-from operator import le
 import numpy as np
 from copy import deepcopy
 
@@ -37,7 +36,7 @@ def rotz(theta):
 
 
 class CircularWalker:
-    """This agent is a simple walking pattern generator adapted 
+    """This agent is a simple walking pattern generator adapted
        from the joystick controlled matlab simulation of the TriPed found here:
         https://github.com/TriPed-Robot/Matlab-Simulation/blob/master/examples/joy_stick_walking.slx
 
@@ -97,7 +96,8 @@ class CircularWalker:
         self.rel_step_angle = 2*np.pi/360*60
         # the angle at which the step should touch the ground again
         self.stop_angle = [np.mod(self.start_angle[0] + self.rel_step_angle, 2*np.pi),
-                           np.mod(self.start_angle[1] + self.rel_step_angle, 2*np.pi),
+                           np.mod(self.start_angle[1] +
+                                  self.rel_step_angle, 2*np.pi),
                            np.mod(self.start_angle[2] + self.rel_step_angle, 2*np.pi)]
 
     def _circular_offset(self, theta):
@@ -112,8 +112,8 @@ class CircularWalker:
         # calculate step size
         est_trvl = 2*abs(angdiff(stop_angle, start_angle))
         final_pos = self.initial_pos[leg_number] + \
-                    self._circular_offset(stop_angle) + \
-                    rotz(self.last_vel[1]) * est_trvl*self.last_vel[0]/2
+            self._circular_offset(stop_angle) + \
+            rotz(self.last_vel[1]) * est_trvl*self.last_vel[0]/2
 
         # move foot based on trajectory parameter and step size
         foot = targeted_step(
@@ -122,9 +122,9 @@ class CircularWalker:
         return s, foot
 
     def _body_controller(self, leg_number):
-        foot = ( self.post_step_state[leg_number]
-                +self._circular_offset(self.angle) 
-                -rotz(self.cmd_vel[1])*self.cmd_vel[0]*self.move_memory[leg_number])
+        foot = (self.post_step_state[leg_number]
+                + self._circular_offset(self.angle)
+                - rotz(self.cmd_vel[1])*self.cmd_vel[0]*self.move_memory[leg_number])
 
         angle_in_range = (np.mod(self.angle, 2*np.pi) >= self.start_angle[leg_number]) and (
             np.mod(self.angle, 2*np.pi) <= self.stop_angle[leg_number])
@@ -143,8 +143,9 @@ class CircularWalker:
             else:
                 self.current_state[leg_number] = 1
 
-                self.move_memory[leg_number]     = 0
-                self.post_step_state[leg_number] = foot  - self._circular_offset(self.angle)
+                self.move_memory[leg_number] = 0
+                self.post_step_state[leg_number] = foot - \
+                    self._circular_offset(self.angle)
 
         elif self.current_state[leg_number] == 1:
             angle_in_range, distance_travelled, foot = self._body_controller(
@@ -172,12 +173,12 @@ class CircularWalker:
                 self.current_state[leg_number] = 1
             else:
                 self.current_state[leg_number] = 2
-        
+
         return foot
 
     def move_robot(self):
         self.angle += self.increment*self.timestep
- 
+
         return [self.single_leg_state_machine(0),
                 self.single_leg_state_machine(1),
                 self.single_leg_state_machine(2)]
