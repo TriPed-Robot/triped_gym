@@ -63,6 +63,23 @@ class SimplifiedTriped:
         for joint in range(p.getNumJoints(self.urdf)):
             p.resetJointState(self.urdf, joint, targetValue=0)
 
+    def reset_robot(self, startPos, startOrientation, joint_values=None):
+        """resets the robots joints to 0 and the base to a specified position and orientation
+
+        Args:
+            startPos ([type]): a 3 dimensional position
+            startOrientation ([type]): a 4 dimensional quaternion representing
+                                       the desired orientation
+        """
+        p.resetBasePositionAndOrientation(
+            self.urdf, startPos, startOrientation)
+
+        if joint_values is None:
+            joint_values = np.zeros(len(self.joint_mappings))
+        for joint in range(p.getNumJoints(self.urdf)):
+            p.resetJointState(self.urdf, joint,
+                              targetValue=joint_values[joint])
+
     def set_world_state(self, startPos, startOrientation):
         """Resets the robots base to a specified position and orientation
 
