@@ -27,6 +27,7 @@ if __name__ == "__main__":
         foot_positions = agent.move_robot()
         for j in [0, 1, 2]:
             robot.set_foot_position(j, foot_positions[j])
+        print(robot.get_ground_forces())
 
         time.sleep(1./200.)
     p.disconnect()

@@ -213,8 +213,27 @@ class SimplifiedTriped:
         Returns:
             [type]: Euler angles in roll pitch yaw convention
                     and a list of 3 dimensional foot positions
+            [type]: The foot positions [x,y,z] relative to the chassis
         """
         _, orientation = p.getBasePositionAndOrientation(self.urdf)
         leg_state = [self.get_foot_position(leg) for leg in [0, 1, 2]]
         euler_orientation = p.getEulerFromQuaternion(orientation)
         return euler_orientation, leg_state
+
+    def get_ground_forces(self):
+        """Returns the normal forces experienced by each leg as a result of ground contact
+
+        Returns:
+            [type]: a three dimensional vector of the ground normal forces
+        """
+        contact_forces = np.zeros(3)
+        if len(p.getContactPoints(self.urdf)) > 0:
+            contact_points = p.getContactPoints(self.urdf)
+            for contact in contact_points:
+                if contact[3] == 3:
+                    contact_forces[0] = contact[9]
+                elif contact[3] == 7:
+                    contact_forces[1] = contact[9]
+                elif contact[3] == 11:
+                    contact_forces[2] = contact[9]
+        return contact_forces
