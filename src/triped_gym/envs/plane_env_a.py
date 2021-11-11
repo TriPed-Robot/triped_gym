@@ -31,7 +31,7 @@ class PlaneEnvF(gym.Env):
                            0.0034906585, 0.0034906585, 0.0034906585,
                            0.523599, 0.523599, 0.523599]))
 
-        # observations made up of chassis orientation, foot positions and ground contact
+        # observations made up of chassis orientation, foot positions and ground forces
         observation_range = np.inf * np.ones([3*3+3+3])
         self.observation_space(low=-observation_range, high=observation_range)
 
@@ -42,6 +42,10 @@ class PlaneEnvF(gym.Env):
         return 0
 
     def _get_observation(self):
+        chassis_orientation, foot_positions = self.robot.get_body_state()
+        ground_forces = self.robot.get_ground_forces()
+
+        return chassis_orientation + foot_positions + ground_forces
 
     def _apply_action(self, action):
         new_actuated_state = {'leg0_swing_left': action[0],
