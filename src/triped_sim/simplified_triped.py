@@ -9,12 +9,12 @@ import os
 
 class SimplifiedTriped:
 
-    def __init__(self, startPos, startOrientation):
+    def __init__(self, start_position, start_orientation):
         urdfFlags = p.URDF_USE_SELF_COLLISION_EXCLUDE_ALL_PARENTS
         dirname = os.path.dirname(__file__)
         urdf_file = os.path.join(dirname, 'robot_descriptions', 'TriPed.urdf')
         self.urdf = p.loadURDF(urdf_file,
-                               startPos, startOrientation,
+                               start_position, start_orientation,
                                flags=urdfFlags,
                                useFixedBase=False)
 
@@ -63,16 +63,16 @@ class SimplifiedTriped:
         for joint in range(p.getNumJoints(self.urdf)):
             p.resetJointState(self.urdf, joint, targetValue=0)
 
-    def reset_robot(self, startPos, startOrientation, joint_values=None):
+    def reset_robot(self, start_position, start_orientation, joint_values=None):
         """resets the robots joints to 0 and the base to a specified position and orientation
 
         Args:
-            startPos ([type]): a 3 dimensional position
-            startOrientation ([type]): a 4 dimensional quaternion representing
+            start_position ([type]): a 3 dimensional position
+            start_orientation ([type]): a 4 dimensional quaternion representing
                                        the desired orientation
         """
         p.resetBasePositionAndOrientation(
-            self.urdf, startPos, startOrientation)
+            self.urdf, start_position, start_orientation)
 
         if joint_values is None:
             joint_values = np.zeros(len(self.joint_mappings))
@@ -80,16 +80,16 @@ class SimplifiedTriped:
             p.resetJointState(self.urdf, joint,
                               targetValue=joint_values[joint])
 
-    def set_world_state(self, startPos, startOrientation):
+    def set_world_state(self, start_position, start_orientation):
         """Resets the robots base to a specified position and orientation
 
         Args:
-            startPos ([type]): a 3 dimensional position
-            startOrientation ([type]): a 4 dimensional quaternion representing
+            start_position ([type]): a 3 dimensional position
+            start_orientation ([type]): a 4 dimensional quaternion representing
                                        the desired orientation
         """
         p.resetBasePositionAndOrientation(
-            self.urdf, startPos, startOrientation)
+            self.urdf, start_position, start_orientation)
 
     def get_world_state(self):
         """Returns the position and orientation of the robot relative to the world
