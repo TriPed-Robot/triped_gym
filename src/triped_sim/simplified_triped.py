@@ -12,7 +12,8 @@ class SimplifiedTriped:
     def __init__(self, start_position, start_orientation):
         urdfFlags = p.URDF_USE_SELF_COLLISION_EXCLUDE_ALL_PARENTS
         dirname = os.path.dirname(__file__)
-        urdf_file = os.path.join(dirname, 'robot_descriptions', 'TriPed.urdf')
+        urdf_file = os.path.join(
+            dirname, 'robot_descriptions', 'simplified_triped.urdf')
         self.urdf = p.loadURDF(urdf_file,
                                start_position, start_orientation,
                                flags=urdfFlags,
