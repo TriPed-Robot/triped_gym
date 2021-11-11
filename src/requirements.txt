@@ -1,0 +1,4 @@
+gym
+numpy
+trip_kinematics
+pybullet
