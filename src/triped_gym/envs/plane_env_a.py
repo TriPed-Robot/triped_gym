@@ -6,7 +6,7 @@ import pybullet_data
 from triped_sim import SimplifiedTriped
 
 
-class PlaneEnvF(gym.Env):
+class PlaneEnvA(gym.Env):
 
     def __init__(self):
         """A simple environment in which the feet of the robot are directly controlled
@@ -33,7 +33,8 @@ class PlaneEnvF(gym.Env):
 
         # observations made up of chassis orientation, foot positions and ground forces
         observation_range = np.inf * np.ones([3*3+3+3])
-        self.observation_space(low=-observation_range, high=observation_range)
+        self.observation_space = gym.spaces.box.Box(
+            low=-observation_range, high=observation_range)
 
         self.done = False
 
@@ -44,8 +45,7 @@ class PlaneEnvF(gym.Env):
     def _get_observation(self):
         chassis_orientation, foot_positions = self.robot.get_body_state()
         ground_forces = self.robot.get_ground_forces()
-
-        return chassis_orientation + foot_positions + ground_forces
+        return np.concatenate([chassis_orientation, np.concatenate(foot_positions), ground_forces])
 
     def _apply_action(self, action):
         new_actuated_state = {'leg0_swing_left': action[0],
@@ -72,6 +72,10 @@ class PlaneEnvF(gym.Env):
     def reset(self):
         "gym function resetting the robot to a initial state"
         self.robot.reset_robot(self.start_position, self.start_orientation)
+
+        observation = self._get_observation()
+        reward = self._get_reward()
+        return observation
 
     def close(self):
         p.disconnect(self.physics_client)

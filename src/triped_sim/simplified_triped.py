@@ -218,7 +218,7 @@ class SimplifiedTriped:
         _, orientation = p.getBasePositionAndOrientation(self.urdf)
         leg_state = [self.get_foot_position(leg) for leg in [0, 1, 2]]
         euler_orientation = p.getEulerFromQuaternion(orientation)
-        return [euler_orientation], leg_state
+        return np.array(euler_orientation), leg_state
 
     def get_ground_forces(self):
         """Returns the normal forces experienced by each leg as a result of ground contact
