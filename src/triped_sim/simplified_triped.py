@@ -76,7 +76,7 @@ class SimplifiedTriped:
             self.urdf, start_position, start_orientation)
 
         if joint_values is None:
-            joint_values = np.zeros(len(self.joint_mappings))
+            joint_values = np.zeros(len(self._joint_mappings))
         for joint in range(p.getNumJoints(self.urdf)):
             p.resetJointState(self.urdf, joint,
                               targetValue=joint_values[joint])
@@ -219,7 +219,7 @@ class SimplifiedTriped:
         _, orientation = p.getBasePositionAndOrientation(self.urdf)
         leg_state = [self.get_foot_position(leg) for leg in [0, 1, 2]]
         euler_orientation = p.getEulerFromQuaternion(orientation)
-        return euler_orientation, leg_state
+        return np.array(euler_orientation), leg_state
 
     def get_ground_forces(self):
         """Returns the normal forces experienced by each leg as a result of ground contact

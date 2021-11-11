@@ -23,6 +23,6 @@ setuptools.setup(
     author='Jan Baumgärtner',
     license='MIT',
     description='...',
-    packages=['triped_sim'],
+    packages=['triped_sim', 'triped_gym'],
     package_data={'triped_sim': need_files}
 )

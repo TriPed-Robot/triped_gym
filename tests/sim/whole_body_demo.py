@@ -10,15 +10,15 @@ from triped_sim import SimplifiedTriped
    Use ctr+alt and left click to move the camera
 """
 if __name__ == "__main__":
-    physicsClient = p.connect(p.GUI)
+    physics_client = p.connect(p.GUI)
     p.setAdditionalSearchPath(pybullet_data.getDataPath())
     p.setGravity(0, 0, -9.81)
     p.setPhysicsEngineParameter(numSolverIterations=1000)
     planeId = p.loadURDF("plane.urdf")
     startPos = [0, 0, 1]
-    startOrientation = p.getQuaternionFromEuler([0, 0, 0])
+    start_orientation = p.getQuaternionFromEuler([0, 0, 0])
 
-    robot = SimplifiedTriped(startPos, startOrientation)
+    robot = SimplifiedTriped(startPos, start_orientation)
 
     initial_pos = [np.array([0.4*1.2, 0,  -0.6]),
                    np.array([-0.2025*1.2, -0.35074*1.2,  -0.6]),
