@@ -11,15 +11,15 @@ from circular_walker import CircularWalker
    Use ctr+alt and left click to move the camera
 """
 if __name__ == "__main__":
-    physicsClient = p.connect(p.GUI)
+    physics_client = p.connect(p.GUI)
     p.setAdditionalSearchPath(pybullet_data.getDataPath())
     p.setGravity(0, 0, -9.81)
     p.setPhysicsEngineParameter(numSolverIterations=1000)
     planeId = p.loadURDF("plane.urdf")
-    startPos = [0, 0, 1]
-    startOrientation = p.getQuaternionFromEuler([0, 0, 0])
+    start_position = [0, 0, 1]
+    start_orientation = p.getQuaternionFromEuler([0, 0, 0])
 
-    robot = SimplifiedTriped(startPos, startOrientation)
+    robot = SimplifiedTriped(start_position, start_orientation)
 
     agent = CircularWalker()
     p.setRealTimeSimulation(1)
@@ -27,6 +27,7 @@ if __name__ == "__main__":
         foot_positions = agent.move_robot()
         for j in [0, 1, 2]:
             robot.set_foot_position(j, foot_positions[j])
+        print(robot.get_ground_forces())
 
         time.sleep(1./200.)
     p.disconnect()
