@@ -1,6 +1,5 @@
 import gym
 import numpy as np
-from numpy.lib.histograms import _histogram_dispatcher
 import pybullet as p
 import pybullet_data
 from triped_sim import SimplifiedTriped
@@ -72,9 +71,7 @@ class PlaneEnvA(gym.Env):
     def reset(self):
         "gym function resetting the robot to a initial state"
         self.robot.reset_robot(self.start_position, self.start_orientation)
-
         observation = self._get_observation()
-        reward = self._get_reward()
         return observation
 
     def close(self):
