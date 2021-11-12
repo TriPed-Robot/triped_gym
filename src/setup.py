@@ -18,11 +18,11 @@ for root, dirs, files in os.walk(hh):
             need_files.append(fn[1+len(hh):])
 
 setuptools.setup(
-    name='triped_simulation',
+    name='triped_gym',
     version='1.0',
     author='Jan Baumgärtner',
     license='MIT',
-    description='...',
-    packages=['triped_sim', 'triped_gym'],
+    description='A gym environment for the TriPed robot',
+    packages=setuptools.find_packages(),
     package_data={'triped_sim': need_files}
 )

@@ -1,6 +1,6 @@
-from triped_gym.envs import PlaneEnvA
+import gym
+env = gym.make('TriPed-v0')
 
-env = PlaneEnvA()
 obs = env.reset()
 print("The initial observation is {}".format(obs))
 
