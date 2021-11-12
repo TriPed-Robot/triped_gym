@@ -14,4 +14,6 @@ for i in range(1000):
     new_obs, reward, done, info = env.step(random_action)
     print("The new observation is {}".format(new_obs))
 
+    env.render(mode='human')
+
     time.sleep(1/240.)
