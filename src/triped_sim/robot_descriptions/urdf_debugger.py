@@ -4,6 +4,7 @@ This script contains helper functions to debug the URDF of the full triped model
 import pybullet as p
 import os
 from math import pi, sin, cos
+import time
 
 def calculate_swing_joints(number):
     """calculates the origin of the swing joint as a function of the leg number
@@ -39,6 +40,5 @@ if __name__ == "__main__":
 
     p.setRealTimeSimulation(1)
 
-    while True:
-        a=0
+    time.sleep(100)
     p.disconnect()

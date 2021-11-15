@@ -37,6 +37,7 @@
         </inertial>
     </link>
 
+    <!-- virtual links required for gimbal joint -->
     <link name="leg_0_rotX">
         <inertial>
             <origin xyz="0 0 0.0" rpy="0.0 0.0 0.0"/>
@@ -79,6 +80,95 @@
             <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy=" 0.0" iyz="0.0" izz="0.0"/>
         </inertial>
     </link>
+
+    <!-- virtual links required to model the spherical joint between output lever and coupling rod-->
+    <link name="leg_0_rotX_coupling_left">
+        <inertial>
+            <origin xyz="0 0 0.0" rpy="0.0 0.0 0.0"/>
+            <mass value="0"/>
+            <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy=" 0.0" iyz="0.0" izz="0.0"/>
+        </inertial>
+    </link>
+    <link name="leg_0_rotY_coupling_left">
+        <inertial>
+            <origin xyz="0 0 0.0" rpy="0.0 0.0 0.0"/>
+            <mass value="0"/>
+            <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy=" 0.0" iyz="0.0" izz="0.0"/>
+        </inertial>
+    </link>
+    <link name="leg_1_rotX_coupling_left">
+        <inertial>
+            <origin xyz="0 0 0.0" rpy="0.0 0.0 0.0"/>
+            <mass value="0"/>
+            <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy=" 0.0" iyz="0.0" izz="0.0"/>
+        </inertial>
+    </link>
+    <link name="leg_1_rotY_coupling_left">
+        <inertial>
+            <origin xyz="0 0 0.0" rpy="0.0 0.0 0.0"/>
+            <mass value="0"/>
+            <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy=" 0.0" iyz="0.0" izz="0.0"/>
+        </inertial>
+    </link>
+    <link name="leg_2_rotX_coupling_left">
+        <inertial>
+            <origin xyz="0 0 0.0" rpy="0.0 0.0 0.0"/>
+            <mass value="0"/>
+            <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy=" 0.0" iyz="0.0" izz="0.0"/>
+        </inertial>
+    </link>
+    <link name="leg_2_rotY_coupling_left">
+        <inertial>
+            <origin xyz="0 0 0.0" rpy="0.0 0.0 0.0"/>
+            <mass value="0"/>
+            <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy=" 0.0" iyz="0.0" izz="0.0"/>
+        </inertial>
+    </link>
+
+    <link name="leg_0_rotX_coupling_right">
+        <inertial>
+            <origin xyz="0 0 0.0" rpy="0.0 0.0 0.0"/>
+            <mass value="0"/>
+            <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy=" 0.0" iyz="0.0" izz="0.0"/>
+        </inertial>
+    </link>
+    <link name="leg_0_rotY_coupling_right">
+        <inertial>
+            <origin xyz="0 0 0.0" rpy="0.0 0.0 0.0"/>
+            <mass value="0"/>
+            <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy=" 0.0" iyz="0.0" izz="0.0"/>
+        </inertial>
+    </link>
+    <link name="leg_1_rotX_coupling_right">
+        <inertial>
+            <origin xyz="0 0 0.0" rpy="0.0 0.0 0.0"/>
+            <mass value="0"/>
+            <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy=" 0.0" iyz="0.0" izz="0.0"/>
+        </inertial>
+    </link>
+    <link name="leg_1_rotY_coupling_right">
+        <inertial>
+            <origin xyz="0 0 0.0" rpy="0.0 0.0 0.0"/>
+            <mass value="0"/>
+            <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy=" 0.0" iyz="0.0" izz="0.0"/>
+        </inertial>
+    </link>
+    <link name="leg_2_rotX_coupling_right">
+        <inertial>
+            <origin xyz="0 0 0.0" rpy="0.0 0.0 0.0"/>
+            <mass value="0"/>
+            <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy=" 0.0" iyz="0.0" izz="0.0"/>
+        </inertial>
+    </link>
+    <link name="leg_2_rotY_coupling_right">
+        <inertial>
+            <origin xyz="0 0 0.0" rpy="0.0 0.0 0.0"/>
+            <mass value="0"/>
+            <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy=" 0.0" iyz="0.0" izz="0.0"/>
+        </inertial>
+    </link>
+
+
 
     <link name="leg_0_drive_module">
         <visual>
@@ -176,6 +266,62 @@
                 <mesh filename="output_lever.stl" scale="0.001 0.001 0.001"/>
             </geometry>
             <material name="swing_left_material"/>
+        </visual>
+    </link>
+
+    <link name="leg_0_coupling_rod_left">
+        <visual>
+            <origin xyz="0.04 0.0 0.0" rpy="0.0 0.0 0.0"/>
+            <geometry>
+                <mesh filename="coupling_rod.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
+            <material name="extend_material"/>
+        </visual>
+    </link>
+    <link name="leg_1_coupling_rod_left">
+        <visual>
+            <origin xyz="0.04 0.0 0.0" rpy="0.0 0.0 0.0"/>
+            <geometry>
+                <mesh filename="coupling_rod.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
+            <material name="extend_material"/>
+        </visual>
+    </link>
+    <link name="leg_2_coupling_rod_left">
+        <visual>
+            <origin xyz="0.04 0.0 0.0" rpy="0.0 0.0 0.0"/>
+            <geometry>
+                <mesh filename="coupling_rod.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
+            <material name="extend_material"/>
+        </visual>
+    </link>
+
+    <link name="leg_0_coupling_rod_right">
+        <visual>
+            <origin xyz="0.04 0.0 0.0" rpy="0.0 0.0 0.0"/>
+            <geometry>
+                <mesh filename="coupling_rod.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
+            <material name="extend_material"/>
+        </visual>
+    </link>
+    <link name="leg_1_coupling_rod_right">
+        <visual>
+            <origin xyz="0.04 0.0 0.0" rpy="0.0 0.0 0.0"/>
+            <geometry>
+                <mesh filename="coupling_rod.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
+            <material name="extend_material"/>
+        </visual>
+    </link>
+    <link name="leg_2_coupling_rod_right">
+        <visual>
+            <origin xyz="0.04 0.0 0.0" rpy="0.0 0.0 0.0"/>
+            <geometry>
+                <mesh filename="coupling_rod.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
+            <material name="extend_material"/>
         </visual>
     </link>
 
@@ -359,6 +505,109 @@
         <axis xyz="0.0 0.0 1.0"/>
         <limit lower="-0.523599" upper="0.523599" effort="1000.0" velocity="0.5"/>
     </joint>
+
+    <joint name="leg_0_LCSX_coupling_left" type="continuous">
+        <parent link="leg_0_left"/>
+        <child link="leg_0_rotX_coupling_left"/>
+        <axis xyz="1.0 0.0 0.0"/>
+        <origin xyz="0.085 0 -0.0145" rpy="0.0 0.0 0"/>
+    </joint>
+    <joint name="leg_1_LCSX_coupling_left" type="continuous">
+        <parent link="leg_1_left"/>
+        <child link="leg_1_rotX_coupling_left"/>
+        <axis xyz="1.0 0.0 0.0"/>
+        <origin xyz="0.085 0 -0.0145" rpy="0.0 0.0 0"/>
+    </joint>
+    <joint name="leg_2_LCSX_coupling_left" type="continuous">
+        <parent link="leg_1_left"/>
+        <child link="leg_2_rotX_coupling_left"/>
+        <axis xyz="1.0 0.0 0.0"/>
+        <origin xyz="0.085 0 -0.0145" rpy="0.0 0.0 0"/>
+    </joint>
+
+    <joint name="leg_0_LCSY_coupling_left" type="continuous">
+        <parent link="leg_0_rotX_coupling_left"/>
+        <child link="leg_0_rotY_coupling_left"/>
+        <axis xyz="0.0 1.0 0.0"/>
+    </joint>
+    <joint name="leg_1_LCSY_coupling_left" type="continuous">
+        <parent link="leg_1_rotX_coupling_left"/>
+        <child link="leg_1_rotY_coupling_left"/>
+        <axis xyz="0.0 1.0 0.0"/>
+    </joint>
+    <joint name="leg_2_LCSY_coupling_left" type="continuous">
+        <parent link="leg_2_rotX_coupling_left"/>
+        <child link="leg_2_rotY_coupling_left"/>
+        <axis xyz="0.0 1.0 0.0"/>
+    </joint>
+
+    <joint name="leg_0_LCSZ_coupling_left" type="continuous">
+        <parent link="leg_0_rotY_coupling_left"/>
+        <child link="leg_0_coupling_rod_left"/>
+        <axis xyz="0.0 0.0 1.0"/>
+    </joint>
+    <joint name="leg_1_LCSZ_coupling_left" type="continuous">
+        <parent link="leg_1_rotY_coupling_left"/>
+        <child link="leg_1_coupling_rod_left"/>
+        <axis xyz="0.0 0.0 1.0"/>
+    </joint>
+    <joint name="leg_2_LCSZ_coupling_left" type="continuous">
+        <parent link="leg_2_rotY_coupling_left"/>
+        <child link="leg_2_coupling_rod_left"/>
+        <axis xyz="0.0 0.0 1.0"/>
+    </joint>
+
+    <joint name="leg_0_LCSX_coupling_right" type="continuous">
+        <parent link="leg_0_right"/>
+        <child link="leg_0_rotX_coupling_right"/>
+        <axis xyz="1.0 0.0 0.0"/>
+        <origin xyz="0.085 0 -0.0145" rpy="0.0 0.0 0"/>
+    </joint>
+    <joint name="leg_1_LCSX_coupling_right" type="continuous">
+        <parent link="leg_1_right"/>
+        <child link="leg_1_rotX_coupling_right"/>
+        <axis xyz="1.0 0.0 0.0"/>
+        <origin xyz="0.085 0 -0.0145" rpy="0.0 0.0 0"/>
+    </joint>
+    <joint name="leg_2_LCSX_coupling_right" type="continuous">
+        <parent link="leg_1_right"/>
+        <child link="leg_2_rotX_coupling_right"/>
+        <axis xyz="1.0 0.0 0.0"/>
+        <origin xyz="0.085 0 -0.0145" rpy="0.0 0.0 0"/>
+    </joint>
+
+    <joint name="leg_0_LCSY_coupling_right" type="continuous">
+        <parent link="leg_0_rotX_coupling_right"/>
+        <child link="leg_0_rotY_coupling_right"/>
+        <axis xyz="0.0 1.0 0.0"/>
+    </joint>
+    <joint name="leg_1_LCSY_coupling_right" type="continuous">
+        <parent link="leg_1_rotX_coupling_right"/>
+        <child link="leg_1_rotY_coupling_right"/>
+        <axis xyz="0.0 1.0 0.0"/>
+    </joint>
+    <joint name="leg_2_LCSY_coupling_right" type="continuous">
+        <parent link="leg_2_rotX_coupling_right"/>
+        <child link="leg_2_rotY_coupling_right"/>
+        <axis xyz="0.0 1.0 0.0"/>
+    </joint>
+
+    <joint name="leg_0_LCSZ_coupling_right" type="continuous">
+        <parent link="leg_0_rotY_coupling_right"/>
+        <child link="leg_0_coupling_rod_right"/>
+        <axis xyz="0.0 0.0 1.0"/>
+    </joint>
+    <joint name="leg_1_LCSZ_coupling_right" type="continuous">
+        <parent link="leg_1_rotY_coupling_right"/>
+        <child link="leg_1_coupling_rod_right"/>
+        <axis xyz="0.0 0.0 1.0"/>
+    </joint>
+    <joint name="leg_2_LCSZ_coupling_right" type="continuous">
+        <parent link="leg_2_rotY_coupling_right"/>
+        <child link="leg_2_coupling_rod_right"/>
+        <axis xyz="0.0 0.0 1.0"/>
+    </joint>
+    
 
     <joint name="leg_0/extend/joint" type="revolute">
         <parent link="leg_0_drive_module"/>
