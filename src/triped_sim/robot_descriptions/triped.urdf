@@ -305,6 +305,12 @@
             </geometry>
             <material name="drive_module_material"/>
         </visual>
+        <collision>
+           <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+            <geometry>
+                <mesh filename="drive_module.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
+        </collision>
         <inertial>
             <origin xyz="0.0259 0.0507 0.0455" rpy="0.0 0.0 0.0"/>
             <mass value="1.908"/>
@@ -319,6 +325,12 @@
             </geometry>
             <material name="drive_module_material"/>
         </visual>
+        <collision>
+           <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+            <geometry>
+                <mesh filename="drive_module.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
+        </collision>
         <inertial>
             <origin xyz="0.0259 0.0507 0.0455" rpy="0.0 0.0 0.0"/>
             <mass value="1.908"/>
@@ -333,6 +345,12 @@
             </geometry>
             <material name="drive_module_material"/>
         </visual>
+        <collision>
+           <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+            <geometry>
+                <mesh filename="drive_module.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
+        </collision>
         <inertial>
             <origin xyz="0.0259 0.0507 0.0455" rpy="0.0 0.0 0.0"/>
             <mass value="1.908"/>
@@ -348,6 +366,12 @@
             </geometry>
             <material name="swing_left_material"/>
         </visual>
+        <collision>
+           <origin xyz="0.0 0.0 0.0" rpy="0.0 1.57079632679 -1.57079632679"/>
+            <geometry>
+                <mesh filename="output_lever.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
+        </collision>
         <inertial>
             <origin xyz="0 0 0.0" rpy="0.0 0.0 0.0"/>
             <mass value="0"/>
@@ -362,6 +386,12 @@
             </geometry>
             <material name="swing_left_material"/>
         </visual>
+        <collision>
+           <origin xyz="0.0 0.0 0.0" rpy="0.0 1.57079632679 -1.57079632679"/>
+            <geometry>
+                <mesh filename="output_lever.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
+        </collision>
         <inertial>
             <origin xyz="0 0 0.0" rpy="0.0 0.0 0.0"/>
             <mass value="0"/>
@@ -376,6 +406,12 @@
             </geometry>
             <material name="swing_left_material"/>
         </visual>
+        <collision>
+           <origin xyz="0.0 0.0 0.0" rpy="0.0 1.57079632679 -1.57079632679"/>
+            <geometry>
+                <mesh filename="output_lever.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
+        </collision>
         <inertial>
             <origin xyz="0 0 0.0" rpy="0.0 0.0 0.0"/>
             <mass value="0"/>
@@ -391,6 +427,12 @@
             </geometry>
             <material name="swing_left_material"/>
         </visual>
+        <collision>
+           <origin xyz="0.0 0.0 0.0" rpy="0.0 1.57079632679 -1.57079632679"/>
+            <geometry>
+                <mesh filename="output_lever.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
+        </collision>
         <inertial>
             <origin xyz="0 0 0.0" rpy="0.0 0.0 0.0"/>
             <mass value="0"/>
@@ -405,6 +447,12 @@
             </geometry>
             <material name="swing_left_material"/>
         </visual>
+        <collision>
+           <origin xyz="0.0 0.0 0.0" rpy="0.0 1.57079632679 -1.57079632679"/>
+            <geometry>
+                <mesh filename="output_lever.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
+        </collision>
         <inertial>
             <origin xyz="0 0 0.0" rpy="0.0 0.0 0.0"/>
             <mass value="0"/>
@@ -419,6 +467,12 @@
             </geometry>
             <material name="swing_left_material"/>
         </visual>
+        <collision>
+           <origin xyz="0.0 0.0 0.0" rpy="0.0 1.57079632679 -1.57079632679"/>
+            <geometry>
+                <mesh filename="output_lever.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
+        </collision>
         <inertial>
             <origin xyz="0 0 0.0" rpy="0.0 0.0 0.0"/>
             <mass value="0"/>
@@ -434,6 +488,12 @@
             </geometry>
             <material name="extend_material"/>
         </visual>
+        <collision>
+           <origin xyz="0.04 0.0 0.0" rpy="0.0 0.0 0.0"/>
+            <geometry>
+                <mesh filename="coupling_rod.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
+        </collision>
         <inertial>
             <origin xyz="0 0 0.0" rpy="0.0 0.0 0.0"/>
             <mass value="0"/>
@@ -448,6 +508,12 @@
             </geometry>
             <material name="extend_material"/>
         </visual>
+        <collision>
+           <origin xyz="0.04 0.0 0.0" rpy="0.0 0.0 0.0"/>
+            <geometry>
+                <mesh filename="coupling_rod.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
+        </collision>
         <inertial>
             <origin xyz="0 0 0.0" rpy="0.0 0.0 0.0"/>
             <mass value="0"/>
@@ -462,6 +528,12 @@
             </geometry>
             <material name="extend_material"/>
         </visual>
+        <collision>
+           <origin xyz="0.04 0.0 0.0" rpy="0.0 0.0 0.0"/>
+            <geometry>
+                <mesh filename="coupling_rod.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
+        </collision>
         <inertial>
             <origin xyz="0 0 0.0" rpy="0.0 0.0 0.0"/>
             <mass value="0"/>
@@ -477,6 +549,12 @@
             </geometry>
             <material name="extend_material"/>
         </visual>
+        <collision>
+           <origin xyz="0.04 0.0 0.0" rpy="0.0 0.0 0.0"/>
+            <geometry>
+                <mesh filename="coupling_rod.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
+        </collision>
         <inertial>
             <origin xyz="0 0 0.0" rpy="0.0 0.0 0.0"/>
             <mass value="0"/>
@@ -491,6 +569,12 @@
             </geometry>
             <material name="extend_material"/>
         </visual>
+        <collision>
+           <origin xyz="0.04 0.0 0.0" rpy="0.0 0.0 0.0"/>
+            <geometry>
+                <mesh filename="coupling_rod.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
+        </collision>
         <inertial>
             <origin xyz="0 0 0.0" rpy="0.0 0.0 0.0"/>
             <mass value="0"/>
@@ -505,6 +589,12 @@
             </geometry>
             <material name="extend_material"/>
         </visual>
+        <collision>
+           <origin xyz="0.04 0.0 0.0" rpy="0.0 0.0 0.0"/>
+            <geometry>
+                <mesh filename="coupling_rod.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
+        </collision>
         <inertial>
             <origin xyz="0 0 0.0" rpy="0.0 0.0 0.0"/>
             <mass value="0"/>
