@@ -41,42 +41,42 @@
     <link name="leg_0_rotX">
         <inertial>
             <origin xyz="0 0 0.0" rpy="0.0 0.0 0.0"/>
-            <mass value="0"/>
+            <mass value="0.01"/>
             <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy=" 0.0" iyz="0.0" izz="0.0"/>
         </inertial>
     </link>
     <link name="leg_0_rotY">
         <inertial>
             <origin xyz="0 0 0.0" rpy="0.0 0.0 0.0"/>
-            <mass value="0"/>
+            <mass value="0.01"/>
             <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy=" 0.0" iyz="0.0" izz="0.0"/>
         </inertial>
     </link>
     <link name="leg_1_rotX">
         <inertial>
             <origin xyz="0 0 0.0" rpy="0.0 0.0 0.0"/>
-            <mass value="0"/>
+            <mass value="0.01"/>
             <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy=" 0.0" iyz="0.0" izz="0.0"/>
         </inertial>
     </link>
     <link name="leg_1_rotY">
         <inertial>
             <origin xyz="0 0 0.0" rpy="0.0 0.0 0.0"/>
-            <mass value="0"/>
+            <mass value="0.01"/>
             <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy=" 0.0" iyz="0.0" izz="0.0"/>
         </inertial>
     </link>
     <link name="leg_2_rotX">
         <inertial>
             <origin xyz="0 0 0.0" rpy="0.0 0.0 0.0"/>
-            <mass value="0"/>
+            <mass value="0.01"/>
             <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy=" 0.0" iyz="0.0" izz="0.0"/>
         </inertial>
     </link>
     <link name="leg_2_rotY">
         <inertial>
             <origin xyz="0 0 0.0" rpy="0.0 0.0 0.0"/>
-            <mass value="0"/>
+            <mass value="0.01"/>
             <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy=" 0.0" iyz="0.0" izz="0.0"/>
         </inertial>
     </link>
@@ -85,42 +85,42 @@
     <link name="leg_0_rotX_coupling_left">
         <inertial>
             <origin xyz="0 0 0.0" rpy="0.0 0.0 0.0"/>
-            <mass value="0"/>
+            <mass value="0.01"/>
             <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy=" 0.0" iyz="0.0" izz="0.0"/>
         </inertial>
     </link>
     <link name="leg_0_rotY_coupling_left">
         <inertial>
             <origin xyz="0 0 0.0" rpy="0.0 0.0 0.0"/>
-            <mass value="0"/>
+            <mass value="0.01"/>
             <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy=" 0.0" iyz="0.0" izz="0.0"/>
         </inertial>
     </link>
     <link name="leg_1_rotX_coupling_left">
         <inertial>
             <origin xyz="0 0 0.0" rpy="0.0 0.0 0.0"/>
-            <mass value="0"/>
+            <mass value="0.01"/>
             <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy=" 0.0" iyz="0.0" izz="0.0"/>
         </inertial>
     </link>
     <link name="leg_1_rotY_coupling_left">
         <inertial>
             <origin xyz="0 0 0.0" rpy="0.0 0.0 0.0"/>
-            <mass value="0"/>
+            <mass value="0.01"/>
             <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy=" 0.0" iyz="0.0" izz="0.0"/>
         </inertial>
     </link>
     <link name="leg_2_rotX_coupling_left">
         <inertial>
             <origin xyz="0 0 0.0" rpy="0.0 0.0 0.0"/>
-            <mass value="0"/>
+            <mass value="0.01"/>
             <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy=" 0.0" iyz="0.0" izz="0.0"/>
         </inertial>
     </link>
     <link name="leg_2_rotY_coupling_left">
         <inertial>
             <origin xyz="0 0 0.0" rpy="0.0 0.0 0.0"/>
-            <mass value="0"/>
+            <mass value="0.01"/>
             <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy=" 0.0" iyz="0.0" izz="0.0"/>
         </inertial>
     </link>
@@ -128,42 +128,42 @@
     <link name="leg_0_rotX_coupling_right">
         <inertial>
             <origin xyz="0 0 0.0" rpy="0.0 0.0 0.0"/>
-            <mass value="0"/>
+            <mass value="0.01"/>
             <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy=" 0.0" iyz="0.0" izz="0.0"/>
         </inertial>
     </link>
     <link name="leg_0_rotY_coupling_right">
         <inertial>
             <origin xyz="0 0 0.0" rpy="0.0 0.0 0.0"/>
-            <mass value="0"/>
+            <mass value="0.01"/>
             <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy=" 0.0" iyz="0.0" izz="0.0"/>
         </inertial>
     </link>
     <link name="leg_1_rotX_coupling_right">
         <inertial>
             <origin xyz="0 0 0.0" rpy="0.0 0.0 0.0"/>
-            <mass value="0"/>
+            <mass value="0.01"/>
             <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy=" 0.0" iyz="0.0" izz="0.0"/>
         </inertial>
     </link>
     <link name="leg_1_rotY_coupling_right">
         <inertial>
             <origin xyz="0 0 0.0" rpy="0.0 0.0 0.0"/>
-            <mass value="0"/>
+            <mass value="0.01"/>
             <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy=" 0.0" iyz="0.0" izz="0.0"/>
         </inertial>
     </link>
     <link name="leg_2_rotX_coupling_right">
         <inertial>
             <origin xyz="0 0 0.0" rpy="0.0 0.0 0.0"/>
-            <mass value="0"/>
+            <mass value="0.01"/>
             <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy=" 0.0" iyz="0.0" izz="0.0"/>
         </inertial>
     </link>
     <link name="leg_2_rotY_coupling_right">
         <inertial>
             <origin xyz="0 0 0.0" rpy="0.0 0.0 0.0"/>
-            <mass value="0"/>
+            <mass value="0.01"/>
             <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy=" 0.0" iyz="0.0" izz="0.0"/>
         </inertial>
     </link>
@@ -172,63 +172,63 @@
 <link name="leg_0_rotX_drive_module_left">
         <inertial>
             <origin xyz="0 0 0.0" rpy="0.0 0.0 0.0"/>
-            <mass value="0"/>
+            <mass value="0.01"/>
             <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy=" 0.0" iyz="0.0" izz="0.0"/>
         </inertial>
     </link>
     <link name="leg_0_rotY_drive_module_left">
         <inertial>
             <origin xyz="0 0 0.0" rpy="0.0 0.0 0.0"/>
-            <mass value="0"/>
+            <mass value="0.01"/>
             <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy=" 0.0" iyz="0.0" izz="0.0"/>
         </inertial>
     </link>
     <link name="leg_0_rotZ_drive_module_left">
         <inertial>
             <origin xyz="0 0 0.0" rpy="0.0 0.0 0.0"/>
-            <mass value="0"/>
+            <mass value="0.01"/>
             <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy=" 0.0" iyz="0.0" izz="0.0"/>
         </inertial>
     </link>
     <link name="leg_1_rotX_drive_module_left">
         <inertial>
             <origin xyz="0 0 0.0" rpy="0.0 0.0 0.0"/>
-            <mass value="0"/>
+            <mass value="0.01"/>
             <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy=" 0.0" iyz="0.0" izz="0.0"/>
         </inertial>
     </link>
     <link name="leg_1_rotY_drive_module_left">
         <inertial>
             <origin xyz="0 0 0.0" rpy="0.0 0.0 0.0"/>
-            <mass value="0"/>
+            <mass value="0.01"/>
             <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy=" 0.0" iyz="0.0" izz="0.0"/>
         </inertial>
     </link>
     <link name="leg_1_rotZ_drive_module_left">
         <inertial>
             <origin xyz="0 0 0.0" rpy="0.0 0.0 0.0"/>
-            <mass value="0"/>
+            <mass value="0.01"/>
             <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy=" 0.0" iyz="0.0" izz="0.0"/>
         </inertial>
     </link>
     <link name="leg_2_rotX_drive_module_left">
         <inertial>
             <origin xyz="0 0 0.0" rpy="0.0 0.0 0.0"/>
-            <mass value="0"/>
+            <mass value="0.01"/>
             <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy=" 0.0" iyz="0.0" izz="0.0"/>
         </inertial>
     </link>
     <link name="leg_2_rotY_drive_module_left">
         <inertial>
             <origin xyz="0 0 0.0" rpy="0.0 0.0 0.0"/>
-            <mass value="0"/>
+            <mass value="0.01"/>
             <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy=" 0.0" iyz="0.0" izz="0.0"/>
         </inertial>
     </link>
     <link name="leg_2_rotZ_drive_module_left">
         <inertial>
             <origin xyz="0 0 0.0" rpy="0.0 0.0 0.0"/>
-            <mass value="0"/>
+            <mass value="0.01"/>
             <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy=" 0.0" iyz="0.0" izz="0.0"/>
         </inertial>
     </link>
@@ -236,63 +236,63 @@
     <link name="leg_0_rotX_drive_module_right">
         <inertial>
             <origin xyz="0 0 0.0" rpy="0.0 0.0 0.0"/>
-            <mass value="0"/>
+            <mass value="0.01"/>
             <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy=" 0.0" iyz="0.0" izz="0.0"/>
         </inertial>
     </link>
     <link name="leg_0_rotY_drive_module_right">
         <inertial>
             <origin xyz="0 0 0.0" rpy="0.0 0.0 0.0"/>
-            <mass value="0"/>
+            <mass value="0.01"/>
             <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy=" 0.0" iyz="0.0" izz="0.0"/>
         </inertial>
     </link>
     <link name="leg_0_rotZ_drive_module_right">
         <inertial>
             <origin xyz="0 0 0.0" rpy="0.0 0.0 0.0"/>
-            <mass value="0"/>
+            <mass value="0.01"/>
             <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy=" 0.0" iyz="0.0" izz="0.0"/>
         </inertial>
     </link>
     <link name="leg_1_rotX_drive_module_right">
         <inertial>
             <origin xyz="0 0 0.0" rpy="0.0 0.0 0.0"/>
-            <mass value="0"/>
+            <mass value="0.01"/>
             <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy=" 0.0" iyz="0.0" izz="0.0"/>
         </inertial>
     </link>
     <link name="leg_1_rotY_drive_module_right">
         <inertial>
             <origin xyz="0 0 0.0" rpy="0.0 0.0 0.0"/>
-            <mass value="0"/>
+            <mass value="0.01"/>
             <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy=" 0.0" iyz="0.0" izz="0.0"/>
         </inertial>
     </link>
     <link name="leg_1_rotZ_drive_module_right">
         <inertial>
             <origin xyz="0 0 0.0" rpy="0.0 0.0 0.0"/>
-            <mass value="0"/>
+            <mass value="0.01"/>
             <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy=" 0.0" iyz="0.0" izz="0.0"/>
         </inertial>
     </link>
     <link name="leg_2_rotX_drive_module_right">
         <inertial>
             <origin xyz="0 0 0.0" rpy="0.0 0.0 0.0"/>
-            <mass value="0"/>
+            <mass value="0.01"/>
             <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy=" 0.0" iyz="0.0" izz="0.0"/>
         </inertial>
     </link>
     <link name="leg_2_rotY_drive_module_right">
         <inertial>
             <origin xyz="0 0 0.0" rpy="0.0 0.0 0.0"/>
-            <mass value="0"/>
+            <mass value="0.01"/>
             <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy=" 0.0" iyz="0.0" izz="0.0"/>
         </inertial>
     </link>
     <link name="leg_2_rotZ_drive_module_right">
         <inertial>
             <origin xyz="0 0 0.0" rpy="0.0 0.0 0.0"/>
-            <mass value="0"/>
+            <mass value="0.01"/>
             <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy=" 0.0" iyz="0.0" izz="0.0"/>
         </inertial>
     </link>
@@ -374,7 +374,7 @@
         </collision>
         <inertial>
             <origin xyz="0 0 0.0" rpy="0.0 0.0 0.0"/>
-            <mass value="0"/>
+            <mass value="0.01"/>
             <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy=" 0.0" iyz="0.0" izz="0.0"/>
         </inertial>
     </link>
@@ -394,7 +394,7 @@
         </collision>
         <inertial>
             <origin xyz="0 0 0.0" rpy="0.0 0.0 0.0"/>
-            <mass value="0"/>
+            <mass value="0.01"/>
             <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy=" 0.0" iyz="0.0" izz="0.0"/>
         </inertial>
     </link>
@@ -414,7 +414,7 @@
         </collision>
         <inertial>
             <origin xyz="0 0 0.0" rpy="0.0 0.0 0.0"/>
-            <mass value="0"/>
+            <mass value="0.01"/>
             <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy=" 0.0" iyz="0.0" izz="0.0"/>
         </inertial>
     </link>
@@ -435,7 +435,7 @@
         </collision>
         <inertial>
             <origin xyz="0 0 0.0" rpy="0.0 0.0 0.0"/>
-            <mass value="0"/>
+            <mass value="0.01"/>
             <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy=" 0.0" iyz="0.0" izz="0.0"/>
         </inertial>
     </link>
@@ -455,7 +455,7 @@
         </collision>
         <inertial>
             <origin xyz="0 0 0.0" rpy="0.0 0.0 0.0"/>
-            <mass value="0"/>
+            <mass value="0.01"/>
             <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy=" 0.0" iyz="0.0" izz="0.0"/>
         </inertial>
     </link>
@@ -475,7 +475,7 @@
         </collision>
         <inertial>
             <origin xyz="0 0 0.0" rpy="0.0 0.0 0.0"/>
-            <mass value="0"/>
+            <mass value="0.01"/>
             <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy=" 0.0" iyz="0.0" izz="0.0"/>
         </inertial>
     </link>
@@ -496,7 +496,7 @@
         </collision>
         <inertial>
             <origin xyz="0 0 0.0" rpy="0.0 0.0 0.0"/>
-            <mass value="0"/>
+            <mass value="0.01"/>
             <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy=" 0.0" iyz="0.0" izz="0.0"/>
         </inertial>
     </link>
@@ -516,7 +516,7 @@
         </collision>
         <inertial>
             <origin xyz="0 0 0.0" rpy="0.0 0.0 0.0"/>
-            <mass value="0"/>
+            <mass value="0.01"/>
             <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy=" 0.0" iyz="0.0" izz="0.0"/>
         </inertial>
     </link>
@@ -536,7 +536,7 @@
         </collision>
         <inertial>
             <origin xyz="0 0 0.0" rpy="0.0 0.0 0.0"/>
-            <mass value="0"/>
+            <mass value="0.01"/>
             <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy=" 0.0" iyz="0.0" izz="0.0"/>
         </inertial>
     </link>
@@ -557,7 +557,7 @@
         </collision>
         <inertial>
             <origin xyz="0 0 0.0" rpy="0.0 0.0 0.0"/>
-            <mass value="0"/>
+            <mass value="0.01"/>
             <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy=" 0.0" iyz="0.0" izz="0.0"/>
         </inertial>
     </link>
@@ -577,7 +577,7 @@
         </collision>
         <inertial>
             <origin xyz="0 0 0.0" rpy="0.0 0.0 0.0"/>
-            <mass value="0"/>
+            <mass value="0.01"/>
             <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy=" 0.0" iyz="0.0" izz="0.0"/>
         </inertial>
     </link>
@@ -597,7 +597,7 @@
         </collision>
         <inertial>
             <origin xyz="0 0 0.0" rpy="0.0 0.0 0.0"/>
-            <mass value="0"/>
+            <mass value="0.01"/>
             <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy=" 0.0" iyz="0.0" izz="0.0"/>
         </inertial>
     </link>
