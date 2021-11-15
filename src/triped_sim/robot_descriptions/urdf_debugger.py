@@ -1,11 +1,16 @@
 """
-This script contains helper functions to setup the URDF of the full triped model
+This script contains helper functions to debug the URDF of the full triped model
 """
 import pybullet as p
 import os
 from math import pi, sin, cos
 
 def calculate_swing_joints(number):
+    """calculates the origin of the swing joint as a function of the leg number
+
+    Args:
+        number ([type]): the number of the leg
+    """
     print("the joint configuration of the revolut joints of leg "+str(number)+" is:")
     DISTANCE = 0.150237035756833
     left_swing_angle = (-21.4745-(120*number))*pi/180
