@@ -167,7 +167,7 @@
             <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy=" 0.0" iyz="0.0" izz="0.0"/>
         </inertial>
     </link>
-    
+
 
 <link name="leg_0_rotX_drive_module_left">
         <inertial>
@@ -682,21 +682,21 @@
     <joint name="leg_0/swing/left/joint" type="revolute">
         <parent link="chassis"/>
         <child link="leg_0_left"/>
-        <axis xyz="0.0 0.0 1.0"/> 
+        <axis xyz="0.0 0.0 1.0"/>
         <limit lower="-1.57079632679" upper="1.57079632679" effort="1000.0" velocity="0.5"/>
         <origin xyz="0.1398076694471282 -0.054999840697609804 -0.051" rpy="0.0 0.0 -0.37480073021952226"/>
     </joint>
     <joint name="leg_1/swing/left/joint" type="revolute">
         <parent link="chassis"/>
         <child link="leg_1_left"/>
-        <axis xyz="0.0 0.0 1.0"/> 
+        <axis xyz="0.0 0.0 1.0"/>
         <limit lower="-1.57079632679" upper="1.57079632679" effort="1000.0" velocity="0.5"/>
         <origin xyz="-0.11753509397179145 -0.0935770730363056 -0.051" rpy="0.0 0.0 -2.469195832612718"/>
     </joint>
     <joint name="leg_2/swing/left/joint" type="revolute">
         <parent link="chassis"/>
         <child link="leg_2_left"/>
-        <axis xyz="0.0 0.0 1.0"/> 
+        <axis xyz="0.0 0.0 1.0"/>
         <limit lower="-1.57079632679" upper="1.57079632679" effort="1000.0" velocity="0.5"/>
         <origin xyz="-0.022272575475336905 0.1485769137339154 -0.051" rpy="0.0 0.0 -4.563590935005912"/>
     </joint>
@@ -704,21 +704,21 @@
     <joint name="leg_0/swing/right/joint" type="revolute">
         <parent link="chassis"/>
         <child link="leg_0_right"/>
-        <axis xyz="0.0 0.0 1.0"/> 
+        <axis xyz="0.0 0.0 1.0"/>
         <limit lower="-1.57079632679" upper="1.57079632679" effort="1000.0" velocity="0.5"/>
         <origin xyz="0.1398076694471282 0.054999840697609804 -0.051" rpy="0.0 0.0 0.37480073021952226"/>
     </joint>
     <joint name="leg_1/swing/right/joint" type="revolute">
         <parent link="chassis"/>
         <child link="leg_1_right"/>
-        <axis xyz="0.0 0.0 1.0"/> 
+        <axis xyz="0.0 0.0 1.0"/>
         <limit lower="-1.57079632679" upper="1.57079632679" effort="1000.0" velocity="0.5"/>
         <origin xyz="-0.022272575475336735 -0.14857691373391543 -0.051" rpy="0.0 0.0 -1.719594372173673"/>
     </joint>
     <joint name="leg_2/swing/right/joint" type="revolute">
         <parent link="chassis"/>
         <child link="leg_2_right"/>
-        <axis xyz="0.0 0.0 1.0"/> 
+        <axis xyz="0.0 0.0 1.0"/>
         <limit lower="-1.57079632679" upper="1.57079632679" effort="1000.0" velocity="0.5"/>
         <origin xyz="-0.11753509397179142 0.09357707303630562 -0.051" rpy="0.0 0.0 -3.8139894745668688"/>
     </joint>
@@ -783,244 +783,231 @@
         <limit lower="-0.523599" upper="0.523599" effort="1000.0" velocity="0.5"/>
     </joint>
 
-    <joint name="leg_0_LCSX_coupling_left" type="revolute">
+    <joint name="leg_0_LCSX_coupling_left" type="continuous">
         <parent link="leg_0_left"/>
         <child link="leg_0_rotX_coupling_left"/>
         <axis xyz="1.0 0.0 0.0"/>
         <origin xyz="0.085 0 -0.0245" rpy="0.0 0.0 0"/>
-        <limit lower="-3.14159265359" upper="3.14159265359" effort="1000.0" velocity="0.5"/>
+
     </joint>
-    <joint name="leg_1_LCSX_coupling_left" type="revolute">
+    <joint name="leg_1_LCSX_coupling_left" type="continuous">
         <parent link="leg_1_left"/>
         <child link="leg_1_rotX_coupling_left"/>
         <axis xyz="1.0 0.0 0.0"/>
         <origin xyz="0.085 0 -0.0245" rpy="0.0 0.0 0"/>
-        <limit lower="-3.14159265359" upper="3.14159265359" effort="1000.0" velocity="0.5"/>
+
     </joint>
-    <joint name="leg_2_LCSX_coupling_left" type="revolute">
+    <joint name="leg_2_LCSX_coupling_left" type="continuous">
         <parent link="leg_2_left"/>
         <child link="leg_2_rotX_coupling_left"/>
         <axis xyz="1.0 0.0 0.0"/>
         <origin xyz="0.085 0 -0.0245" rpy="0.0 0.0 0"/>
-        <limit lower="-3.14159265359" upper="3.14159265359" effort="1000.0" velocity="0.5"/>
+
     </joint>
 
-    <joint name="leg_0_LCSY_coupling_left" type="revolute">
+    <joint name="leg_0_LCSY_coupling_left" type="continuous">
         <parent link="leg_0_rotX_coupling_left"/>
         <child link="leg_0_rotY_coupling_left"/>
         <axis xyz="0.0 1.0 0.0"/>
-        <limit lower="-3.14159265359" upper="3.14159265359" effort="1000.0" velocity="0.5"/>
+
     </joint>
-    <joint name="leg_1_LCSY_coupling_left" type="revolute">
+    <joint name="leg_1_LCSY_coupling_left" type="continuous">
         <parent link="leg_1_rotX_coupling_left"/>
         <child link="leg_1_rotY_coupling_left"/>
         <axis xyz="0.0 1.0 0.0"/>
-        <limit lower="-3.14159265359" upper="3.14159265359" effort="1000.0" velocity="0.5"/>
+
     </joint>
-    <joint name="leg_2_LCSY_coupling_left" type="revolute">
+    <joint name="leg_2_LCSY_coupling_left" type="continuous">
         <parent link="leg_2_rotX_coupling_left"/>
         <child link="leg_2_rotY_coupling_left"/>
         <axis xyz="0.0 1.0 0.0"/>
-        <limit lower="-3.14159265359" upper="3.14159265359" effort="1000.0" velocity="0.5"/>
+
     </joint>
 
-    <joint name="leg_0_LCSZ_coupling_left" type="revolute">
+    <joint name="leg_0_LCSZ_coupling_left" type="continuous">
         <parent link="leg_0_rotY_coupling_left"/>
         <child link="leg_0_coupling_rod_left"/>
         <axis xyz="0.0 0.0 1.0"/>
-        <limit lower="-3.14159265359" upper="3.14159265359" effort="1000.0" velocity="0.5"/>
+
     </joint>
-    <joint name="leg_1_LCSZ_coupling_left" type="revolute">
+    <joint name="leg_1_LCSZ_coupling_left" type="continuous">
         <parent link="leg_1_rotY_coupling_left"/>
         <child link="leg_1_coupling_rod_left"/>
         <axis xyz="0.0 0.0 1.0"/>
-        <limit lower="-3.14159265359" upper="3.14159265359" effort="1000.0" velocity="0.5"/>
+
     </joint>
-    <joint name="leg_2_LCSZ_coupling_left" type="revolute">
+    <joint name="leg_2_LCSZ_coupling_left" type="continuous">
         <parent link="leg_2_rotY_coupling_left"/>
         <child link="leg_2_coupling_rod_left"/>
         <axis xyz="0.0 0.0 1.0"/>
-        <limit lower="-3.14159265359" upper="3.14159265359" effort="1000.0" velocity="0.5"/>
+
     </joint>
 
-    <joint name="leg_0_LCSX_coupling_right" type="revolute">
+    <joint name="leg_0_LCSX_coupling_right" type="continuous">
         <parent link="leg_0_right"/>
         <child link="leg_0_rotX_coupling_right"/>
         <axis xyz="1.0 0.0 0.0"/>
         <origin xyz="0.085 0 -0.0245" rpy="0.0 0.0 0"/>
-        <limit lower="-3.14159265359" upper="3.14159265359" effort="1000.0" velocity="0.5"/>
+
     </joint>
-    <joint name="leg_1_LCSX_coupling_right" type="revolute">
+    <joint name="leg_1_LCSX_coupling_right" type="continuous">
         <parent link="leg_1_right"/>
         <child link="leg_1_rotX_coupling_right"/>
         <axis xyz="1.0 0.0 0.0"/>
         <origin xyz="0.085 0 -0.0245" rpy="0.0 0.0 0"/>
-        <limit lower="-3.14159265359" upper="3.14159265359" effort="1000.0" velocity="0.5"/>
+
     </joint>
-    <joint name="leg_2_LCSX_coupling_right" type="revolute">
+    <joint name="leg_2_LCSX_coupling_right" type="continuous">
         <parent link="leg_2_right"/>
         <child link="leg_2_rotX_coupling_right"/>
         <axis xyz="1.0 0.0 0.0"/>
         <origin xyz="0.085 0 -0.0245" rpy="0.0 0.0 0"/>
-        <limit lower="-3.14159265359" upper="3.14159265359" effort="1000.0" velocity="0.5"/>
+
     </joint>
 
-    <joint name="leg_0_LCSY_coupling_right" type="revolute">
+    <joint name="leg_0_LCSY_coupling_right" type="continuous">
         <parent link="leg_0_rotX_coupling_right"/>
         <child link="leg_0_rotY_coupling_right"/>
         <axis xyz="0.0 1.0 0.0"/>
-        <limit lower="-3.14159265359" upper="3.14159265359" effort="1000.0" velocity="0.5"/>
+
     </joint>
-    <joint name="leg_1_LCSY_coupling_right" type="revolute">
+    <joint name="leg_1_LCSY_coupling_right" type="continuous">
         <parent link="leg_1_rotX_coupling_right"/>
         <child link="leg_1_rotY_coupling_right"/>
         <axis xyz="0.0 1.0 0.0"/>
-        <limit lower="-3.14159265359" upper="3.14159265359" effort="1000.0" velocity="0.5"/>
+
     </joint>
-    <joint name="leg_2_LCSY_coupling_right" type="revolute">
+    <joint name="leg_2_LCSY_coupling_right" type="continuous">
         <parent link="leg_2_rotX_coupling_right"/>
         <child link="leg_2_rotY_coupling_right"/>
         <axis xyz="0.0 1.0 0.0"/>
-        <limit lower="-3.14159265359" upper="3.14159265359" effort="1000.0" velocity="0.5"/>
+
     </joint>
 
-    <joint name="leg_0_LCSZ_coupling_right" type="revolute">
+    <joint name="leg_0_LCSZ_coupling_right" type="continuous">
         <parent link="leg_0_rotY_coupling_right"/>
         <child link="leg_0_coupling_rod_right"/>
         <axis xyz="0.0 0.0 1.0"/>
-        <limit lower="-3.14159265359" upper="3.14159265359" effort="1000.0" velocity="0.5"/>
+
     </joint>
-    <joint name="leg_1_LCSZ_coupling_right" type="revolute">
+    <joint name="leg_1_LCSZ_coupling_right" type="continuous">
         <parent link="leg_1_rotY_coupling_right"/>
         <child link="leg_1_coupling_rod_right"/>
         <axis xyz="0.0 0.0 1.0"/>
-        <limit lower="-3.14159265359" upper="3.14159265359" effort="1000.0" velocity="0.5"/>
+
     </joint>
-    <joint name="leg_2_LCSZ_coupling_right" type="revolute">
+    <joint name="leg_2_LCSZ_coupling_right" type="continuous">
         <parent link="leg_2_rotY_coupling_right"/>
         <child link="leg_2_coupling_rod_right"/>
         <axis xyz="0.0 0.0 1.0"/>
-        <limit lower="-3.14159265359" upper="3.14159265359" effort="1000.0" velocity="0.5"/>
+
     </joint>
-    
-    <joint name="leg_0_LCSX_drive_module_left" type="revolute">
+
+    <joint name="leg_0_LCSX_drive_module_left" type="continuous">
         <parent link="leg_0_coupling_rod_left"/>
         <child link="leg_0_rotX_drive_module_left"/>
         <axis xyz="1.0 0.0 0.0"/>
         <origin xyz="0.11 0 0" rpy="0.0 0.0 0"/>
-        <limit lower="-3.14159265359" upper="3.14159265359" effort="1000.0" velocity="0.5"/>
+
     </joint>
-    <joint name="leg_1_LCSX_drive_module_left" type="revolute">
+    <joint name="leg_1_LCSX_drive_module_left" type="continuous">
         <parent link="leg_1_coupling_rod_left"/>
         <child link="leg_1_rotX_drive_module_left"/>
         <axis xyz="1.0 0.0 0.0"/>
         <origin xyz="0.11 0 0" rpy="0.0 0.0 0"/>
-        <limit lower="-3.14159265359" upper="3.14159265359" effort="1000.0" velocity="0.5"/>
+
     </joint>
-    <joint name="leg_2_LCSX_drive_module_left" type="revolute">
+    <joint name="leg_2_LCSX_drive_module_left" type="continuous">
         <parent link="leg_2_coupling_rod_left"/>
         <child link="leg_2_rotX_drive_module_left"/>
         <axis xyz="1.0 0.0 0.0"/>
         <origin xyz="0.11 0 0" rpy="0.0 0.0 0"/>
-        <limit lower="-3.14159265359" upper="3.14159265359" effort="1000.0" velocity="0.5"/>
+
     </joint>
 
-    <joint name="leg_0_LCSY_drive_module_left" type="revolute">
+    <joint name="leg_0_LCSY_drive_module_left" type="continuous">
         <parent link="leg_0_rotX_drive_module_left"/>
         <child link="leg_0_rotY_drive_module_left"/>
         <axis xyz="0.0 1.0 0.0"/>
-        <limit lower="-3.14159265359" upper="3.14159265359" effort="1000.0" velocity="0.5"/>
+
     </joint>
-    <joint name="leg_1_LCSY_drive_module_left" type="revolute">
+    <joint name="leg_1_LCSY_drive_module_left" type="continuous">
         <parent link="leg_1_rotX_drive_module_left"/>
         <child link="leg_1_rotY_drive_module_left"/>
         <axis xyz="0.0 1.0 0.0"/>
-        <limit lower="-3.14159265359" upper="3.14159265359" effort="1000.0" velocity="0.5"/>
+
     </joint>
-    <joint name="leg_2_LCSY_drive_module_left" type="revolute">
+    <joint name="leg_2_LCSY_drive_module_left" type="continuous">
         <parent link="leg_2_rotX_drive_module_left"/>
         <child link="leg_2_rotY_drive_module_left"/>
         <axis xyz="0.0 1.0 0.0"/>
-        <limit lower="-3.14159265359" upper="3.14159265359" effort="1000.0" velocity="0.5"/>
     </joint>
 
-    <joint name="leg_0_LCSZ_drive_module_left" type="revolute">
+    <joint name="leg_0_LCSZ_drive_module_left" type="continuous">
         <parent link="leg_0_rotY_drive_module_left"/>
         <child link="leg_0_rotZ_drive_module_left"/>
         <axis xyz="0.0 0.0 1.0"/>
-        <limit lower="-3.14159265359" upper="3.14159265359" effort="1000.0" velocity="0.5"/>
     </joint>
-    <joint name="leg_1_LCSZ_drive_module_left" type="revolute">
+    <joint name="leg_1_LCSZ_drive_module_left" type="continuous">
         <parent link="leg_1_rotY_drive_module_left"/>
         <child link="leg_1_rotZ_drive_module_left"/>
         <axis xyz="0.0 0.0 1.0"/>
-        <limit lower="-3.14159265359" upper="3.14159265359" effort="1000.0" velocity="0.5"/>
     </joint>
-    <joint name="leg_2_LCSZ_drive_module_left" type="revolute">
+    <joint name="leg_2_LCSZ_drive_module_left" type="continuous">
         <parent link="leg_2_rotY_drive_module_left"/>
         <child link="leg_2_rotZ_drive_module_left"/>
         <axis xyz="0.0 0.0 1.0"/>
-        <limit lower="-3.14159265359" upper="3.14159265359" effort="1000.0" velocity="0.5"/>
     </joint>
 
-    <joint name="leg_0_LCSX_drive_module_right" type="revolute">
+    <joint name="leg_0_LCSX_drive_module_right" type="continuous">
         <parent link="leg_0_right"/>
         <child link="leg_0_rotX_drive_module_right"/>
         <axis xyz="1.0 0.0 0.0"/>
         <origin xyz="0.11 0 0" rpy="0.0 0.0 0"/>
-        <limit lower="-3.14159265359" upper="3.14159265359" effort="1000.0" velocity="0.5"/>
     </joint>
-    <joint name="leg_1_LCSX_drive_module_right" type="revolute">
+    <joint name="leg_1_LCSX_drive_module_right" type="continuous">
         <parent link="leg_1_right"/>
         <child link="leg_1_rotX_drive_module_right"/>
         <axis xyz="1.0 0.0 0.0"/>
         <origin xyz="0.11 0 0" rpy="0.0 0.0 0"/>
-        <limit lower="-3.14159265359" upper="3.14159265359" effort="1000.0" velocity="0.5"/>
     </joint>
-    <joint name="leg_2_LCSX_drive_module_right" type="revolute">
+    <joint name="leg_2_LCSX_drive_module_right" type="continuous">
         <parent link="leg_2_right"/>
         <child link="leg_2_rotX_drive_module_right"/>
         <axis xyz="1.0 0.0 0.0"/>
         <origin xyz="0.11 0 0" rpy="0.0 0.0 0"/>
-        <limit lower="-3.14159265359" upper="3.14159265359" effort="1000.0" velocity="0.5"/>
     </joint>
 
-    <joint name="leg_0_LCSY_drive_module_right" type="revolute">
+    <joint name="leg_0_LCSY_drive_module_right" type="continuous">
         <parent link="leg_0_rotX_drive_module_right"/>
         <child link="leg_0_rotY_drive_module_right"/>
         <axis xyz="0.0 1.0 0.0"/>
-        <limit lower="-3.14159265359" upper="3.14159265359" effort="1000.0" velocity="0.5"/>
     </joint>
-    <joint name="leg_1_LCSY_drive_module_right" type="revolute">
+    <joint name="leg_1_LCSY_drive_module_right" type="continuous">
         <parent link="leg_1_rotX_drive_module_right"/>
         <child link="leg_1_rotY_drive_module_right"/>
         <axis xyz="0.0 1.0 0.0"/>
-        <limit lower="-3.14159265359" upper="3.14159265359" effort="1000.0" velocity="0.5"/>
     </joint>
-    <joint name="leg_2_LCSY_drive_module_right" type="revolute">
+    <joint name="leg_2_LCSY_drive_module_right" type="continuous">
         <parent link="leg_2_rotX_drive_module_right"/>
         <child link="leg_2_rotY_drive_module_right"/>
         <axis xyz="0.0 1.0 0.0"/>
-        <limit lower="-3.14159265359" upper="3.14159265359" effort="1000.0" velocity="0.5"/>
     </joint>
 
-    <joint name="leg_0_LCSZ_drive_module_right" type="revolute">
+    <joint name="leg_0_LCSZ_drive_module_right" type="continuous">
         <parent link="leg_0_rotY_drive_module_right"/>
         <child link="leg_0_rotZ_drive_module_right"/>
         <axis xyz="0.0 0.0 1.0"/>
-        <limit lower="-3.14159265359" upper="3.14159265359" effort="1000.0" velocity="0.5"/>
     </joint>
-    <joint name="leg_1_LCSZ_drive_module_right" type="revolute">
+    <joint name="leg_1_LCSZ_drive_module_right" type="continuous">
         <parent link="leg_1_rotY_drive_module_right"/>
         <child link="leg_1_rotZ_drive_module_right"/>
         <axis xyz="0.0 0.0 1.0"/>
-        <limit lower="-3.14159265359" upper="3.14159265359" effort="1000.0" velocity="0.5"/>
     </joint>
-    <joint name="leg_2_LCSZ_drive_module_right" type="revolute">
+    <joint name="leg_2_LCSZ_drive_module_right" type="continuous">
         <parent link="leg_2_rotY_drive_module_right"/>
         <child link="leg_2_rotZ_drive_module_right"/>
         <axis xyz="0.0 0.0 1.0"/>
-        <limit lower="-3.14159265359" upper="3.14159265359" effort="1000.0" velocity="0.5"/>
     </joint>
 
     <joint name="leg_0/extend/joint" type="revolute">
