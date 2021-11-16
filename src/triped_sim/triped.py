@@ -104,5 +104,17 @@ class Triped(TripedBase):
             leg_number ([type]): The leg which is to be controlled, numbered from zero to two.
             target ([type]): A 3 dimensional target position.
         """
-        solution = self._inv_kin_solver[leg_number].solve_actuated(target)
+
+        # provide the internal closure equation with a tip to stay in the same kinematic mode
+        current_actuated_state = self._kinematic_model.get_actuated_state()
+        mapping_arg = {}
+        for i in [0, 1, 2]:
+            left_actuator = 'leg_'+str(leg_number) + '_swing_left'
+            right_actuator = 'leg_'+str(leg_number) + '_swing_right'
+            tip = {left_actuator: current_actuated_state[left_actuator],
+                   right_actuator: current_actuated_state[right_actuator]}
+            mapping_arg['leg_'+str(leg_number)+'_closed_chain'] = [tip]
+
+        solution = self._inv_kin_solver[leg_number].solve_actuated(
+            target, initial_tip=self._kinematic_model.get_virtual_state(), mapping_argument=mapping_arg)
         self.set_actuated_state(solution)
