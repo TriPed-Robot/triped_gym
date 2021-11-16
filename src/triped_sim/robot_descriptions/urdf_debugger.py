@@ -45,16 +45,9 @@ if __name__ == "__main__":
     for id in range(p.getNumJoints(urdf)):
         name = p.getJointInfo(urdf, id)[12].decode('UTF-8')
         link_name_to_index[name] = id
-    # print(link_name_to_index)
+    print(link_name_to_index)
 
     joint_number = p.getNumJoints(urdf)
-    for i in range(joint_number):
-        '''
-        p.setJointMotorControl2(urdf, i, p.POSITION_CONTROL,
-                            force=80000,
-                            targetPosition=1)
-        '''
-        print(p.getJointInfo(urdf, i))
 
     p.createConstraint(urdf,
                        -1, -1, -1,
