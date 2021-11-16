@@ -5,9 +5,10 @@ from trip_robots.triped import triped
 import numpy as np
 import os
 
+
 class TripedBase:
 
-    def __init__(self, urdf_model, start_position, start_orientation,foot_links):
+    def __init__(self, urdf_model, start_position, start_orientation, foot_links):
         urdfFlags = p.URDF_USE_SELF_COLLISION_EXCLUDE_ALL_PARENTS
         dirname = os.path.dirname(__file__)
         urdf_file = os.path.join(
@@ -18,29 +19,29 @@ class TripedBase:
                                useFixedBase=False)
 
         # possible virtual state joint_targets
-        self._virtual_state_shape = {'leg0_gimbal_joint': {'rx': 0, 'ry': 0, 'rz': 0},
-                                     'leg0_extend_joint': {'ry': 0},
-                                     'leg1_gimbal_joint': {'rx': 0, 'ry': 0, 'rz': 0},
-                                     'leg1_extend_joint': {'ry': 0},
-                                     'leg2_gimbal_joint': {'rx': 0, 'ry': 0, 'rz': 0},
-                                     'leg2_extend_joint': {'ry': 0}}
+        self._virtual_state_shape = {'leg_0_gimbal_joint': {'rx': 0, 'ry': 0, 'rz': 0},
+                                     'leg_0_extend_joint': {'ry': 0},
+                                     'leg_1_gimbal_joint': {'rx': 0, 'ry': 0, 'rz': 0},
+                                     'leg_1_extend_joint': {'ry': 0},
+                                     'leg_2_gimbal_joint': {'rx': 0, 'ry': 0, 'rz': 0},
+                                     'leg_2_extend_joint': {'ry': 0}}
 
         # possible actuated state joint_targets
-        self._actuated_state_shape = {'leg0_swing_left': 0,
-                                      'leg0_swing_right': 0,
-                                      'leg0_extend_joint_ry': 0,
-                                      'leg1_swing_left': 0,
-                                      'leg1_swing_right': 0,
-                                      'leg1_extend_joint_ry': 0,
-                                      'leg2_swing_left': 0,
-                                      'leg2_swing_right': 0,
-                                      'leg2_extend_joint_ry': 0}
+        self._actuated_state_shape = {'leg_0_swing_left': 0,
+                                      'leg_0_swing_right': 0,
+                                      'leg_0_extend_joint_ry': 0,
+                                      'leg_1_swing_left': 0,
+                                      'leg_1_swing_right': 0,
+                                      'leg_1_extend_joint_ry': 0,
+                                      'leg_2_swing_left': 0,
+                                      'leg_2_swing_right': 0,
+                                      'leg_2_extend_joint_ry': 0}
 
         self._kinematic_model = deepcopy(triped)
-        self._inv_kin_solver = [trip.SimpleInvKinSolver(triped, 'leg0_A_LL_Joint_FCS'),
+        self._inv_kin_solver = [trip.SimpleInvKinSolver(triped, 'leg_0_A_LL_Joint_FCS'),
                                 trip.SimpleInvKinSolver(
-            triped, 'leg1_A_LL_Joint_FCS'),
-            trip.SimpleInvKinSolver(triped, 'leg2_A_LL_Joint_FCS')]
+            triped, 'leg_1_A_LL_Joint_FCS'),
+            trip.SimpleInvKinSolver(triped, 'leg_2_A_LL_Joint_FCS')]
 
         # disable the default velocity motors
         # and set some position control with small force
@@ -49,10 +50,8 @@ class TripedBase:
         for joint in range(p.getNumJoints(self.urdf)):
             p.resetJointState(self.urdf, joint, targetValue=0)
 
-
-        #specified which links are considered the robots feet
+        # specified which links are considered the robots feet
         self.foot_links = foot_links
-
 
     def reset_robot(self, start_position, start_orientation, joint_values=None):
         """resets the robots joints to 0 and the base to a specified position and orientation
@@ -112,8 +111,8 @@ class TripedBase:
             leg_targets ([type]): A list containing the three foot positions ordered from leg 0 to 2
         """
         base_to_floor = trip.Transformation('body_orientation',
-                                            {'rx': orientation[0], 
-                                             'ry': orientation[1], 
+                                            {'rx': orientation[0],
+                                             'ry': orientation[1],
                                              'rz': orientation[2]})
         for leg in [0, 1, 2]:
             target = leg_targets[leg]

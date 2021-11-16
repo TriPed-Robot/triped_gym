@@ -6,8 +6,8 @@ from triped_sim.triped_base import TripedBase
 class SimplifiedTriped(TripedBase):
 
     def __init__(self, start_position, start_orientation):
-        """The simplified TriPed model forgoes any closed chains by modelling the hip as a single 
-           gimbal joint. 
+        """The simplified TriPed model forgoes any closed chains by modelling the hip as a single
+           gimbal joint.
            Although this increases performance it also ads an additional degree of freedom.
 
         Args:
@@ -15,24 +15,24 @@ class SimplifiedTriped(TripedBase):
             start_orientation ([type]): The world orientation at which the model should be spawned
                                         as a quaternion
         """
-        self._joint_mappings = [('leg0_gimbal_joint', 'rx'),
-                                ('leg0_gimbal_joint', 'ry'),
-                                ('leg0_gimbal_joint', 'rz'),
-                                ('leg0_extend_joint', 'ry'),
-                                ('leg1_gimbal_joint', 'rx'),
-                                ('leg1_gimbal_joint', 'ry'),
-                                ('leg1_gimbal_joint', 'rz'),
-                                ('leg1_extend_joint', 'ry'),
-                                ('leg2_gimbal_joint', 'rx'),
-                                ('leg2_gimbal_joint', 'ry'),
-                                ('leg2_gimbal_joint', 'rz'),
-                                ('leg2_extend_joint', 'ry'), ]
+        self._joint_mappings = [('leg_0_gimbal_joint', 'rx'),
+                                ('leg_0_gimbal_joint', 'ry'),
+                                ('leg_0_gimbal_joint', 'rz'),
+                                ('leg_0_extend_joint', 'ry'),
+                                ('leg_1_gimbal_joint', 'rx'),
+                                ('leg_1_gimbal_joint', 'ry'),
+                                ('leg_1_gimbal_joint', 'rz'),
+                                ('leg_1_extend_joint', 'ry'),
+                                ('leg_2_gimbal_joint', 'rx'),
+                                ('leg_2_gimbal_joint', 'ry'),
+                                ('leg_2_gimbal_joint', 'rz'),
+                                ('leg_2_extend_joint', 'ry'), ]
 
         TripedBase.__init__(self,
-                            urdf_model = 'simplified_triped.urdf',
-                            start_position = start_position,
-                            start_orientation = start_orientation,
-                            foot_links = [3,7,11])
+                            urdf_model='simplified_triped.urdf',
+                            start_position=start_position,
+                            start_orientation=start_orientation,
+                            foot_links=[3, 7, 11])
 
     def get_virtual_state(self):
         """Returns the position of each joint following trip_kinematics conventions

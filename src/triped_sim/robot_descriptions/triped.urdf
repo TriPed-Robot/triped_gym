@@ -679,21 +679,21 @@
     </link>
 
     <!-- joints of the robot -->
-    <joint name="leg_0/swing/left/joint" type="revolute">
+    <joint name="leg_0_swing_left" type="revolute">
         <parent link="chassis"/>
         <child link="leg_0_left"/>
         <axis xyz="0.0 0.0 1.0"/>
         <limit lower="-1.57079632679" upper="1.57079632679" effort="1000.0" velocity="0.5"/>
         <origin xyz="0.1398076694471282 -0.054999840697609804 -0.051" rpy="0.0 0.0 -0.37480073021952226"/>
     </joint>
-    <joint name="leg_1/swing/left/joint" type="revolute">
+    <joint name="leg_1_swing_left" type="revolute">
         <parent link="chassis"/>
         <child link="leg_1_left"/>
         <axis xyz="0.0 0.0 1.0"/>
         <limit lower="-1.57079632679" upper="1.57079632679" effort="1000.0" velocity="0.5"/>
         <origin xyz="-0.11753509397179145 -0.0935770730363056 -0.051" rpy="0.0 0.0 -2.469195832612718"/>
     </joint>
-    <joint name="leg_2/swing/left/joint" type="revolute">
+    <joint name="leg_2_swing_left" type="revolute">
         <parent link="chassis"/>
         <child link="leg_2_left"/>
         <axis xyz="0.0 0.0 1.0"/>
@@ -701,21 +701,21 @@
         <origin xyz="-0.022272575475336905 0.1485769137339154 -0.051" rpy="0.0 0.0 -4.563590935005912"/>
     </joint>
 
-    <joint name="leg_0/swing/right/joint" type="revolute">
+    <joint name="leg_0_swing_right" type="revolute">
         <parent link="chassis"/>
         <child link="leg_0_right"/>
         <axis xyz="0.0 0.0 1.0"/>
         <limit lower="-1.57079632679" upper="1.57079632679" effort="1000.0" velocity="0.5"/>
         <origin xyz="0.1398076694471282 0.054999840697609804 -0.051" rpy="0.0 0.0 0.37480073021952226"/>
     </joint>
-    <joint name="leg_1/swing/right/joint" type="revolute">
+    <joint name="leg_1_swing_right" type="revolute">
         <parent link="chassis"/>
         <child link="leg_1_right"/>
         <axis xyz="0.0 0.0 1.0"/>
         <limit lower="-1.57079632679" upper="1.57079632679" effort="1000.0" velocity="0.5"/>
         <origin xyz="-0.022272575475336735 -0.14857691373391543 -0.051" rpy="0.0 0.0 -1.719594372173673"/>
     </joint>
-    <joint name="leg_2/swing/right/joint" type="revolute">
+    <joint name="leg_2_swing_right" type="revolute">
         <parent link="chassis"/>
         <child link="leg_2_right"/>
         <axis xyz="0.0 0.0 1.0"/>
@@ -1010,21 +1010,21 @@
         <axis xyz="0.0 0.0 1.0"/>
     </joint>
 
-    <joint name="leg_0/extend/joint" type="revolute">
+    <joint name="leg_0_extend_joint_ry" type="revolute">
         <parent link="leg_0_drive_module"/>
         <child link="leg_0_open"/>
         <axis xyz="0.0 1.0 0.0"/>
         <limit lower="-0.48869219055" upper="0.0034906585" effort="1000.0" velocity="0.5"/>
         <origin xyz="1.640 0.0 -0.037" rpy="0.0 -0.05235987756 0.0"/>
     </joint>
-    <joint name="leg_1/extend/joint" type="revolute">
+    <joint name="leg_1_extend_joint_ry" type="revolute">
         <parent link="leg_1_drive_module"/>
         <child link="leg_1_open"/>
         <axis xyz="0.0 1.0 0.0"/>
         <limit lower="-0.48869219055" upper="0.0034906585" effort="1000.0" velocity="0.5"/>
         <origin xyz="1.640 0.0 -0.037" rpy="0.0 -0.05235987756 0.0"/>
     </joint>
-    <joint name="leg_2/extend/joint" type="revolute">
+    <joint name="leg_2_extend_joint_ry" type="revolute">
         <parent link="leg_2_drive_module"/>
         <child link="leg_2_open"/>
         <axis xyz="0.0 1.0 0.0"/>
