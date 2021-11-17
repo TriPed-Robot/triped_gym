@@ -118,22 +118,15 @@ class Triped(TripedBase):
         Kinematic calculations are performed using TriP, although pybullet is also capable
         of computing inverse kinematics.
 
+        Note that TriPs inverse kinematic solevers can sometimes be unstable, so use this interface
+        with caution.
+
         Args:
             leg_number ([type]): The leg which is to be controlled, numbered from zero to two.
             target ([type]): A 3 dimensional target position.
         """
-
-        # provide the internal closure equation with a tip to stay in the same kinematic mode
-        '''
-        leg_name = 'leg_'+str(leg_number)
-        current_actuated_state = self._kinematic_model.get_actuated_state()
-        mapping_arg = {}
-        mapping_arg[leg_name+'_closed_chain'] = [
-            filter_state_by_leg(leg_number, current_actuated_state)]
-        '''
-
         solution = self._inv_kin_solver[leg_number].solve_actuated(
-            target, initial_tip=self._kinematic_model.get_virtual_state())  # , mapping_argument=mapping_arg)
+            target, initial_tip=self._kinematic_model.get_virtual_state())
 
         # the solution also returns a state for the unused legs. This will reset them to zero.
         # these solutions have to be filtered
