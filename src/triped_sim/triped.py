@@ -98,7 +98,11 @@ class Triped(TripedBase):
         Returns:
             Dict[str,float]: A actuated state following trip_kinematics conventions
         """
-        return self._kinematic_model.get_actuated_state()
+        actuated_state = {}
+        for joint in self._actuated_state_shape.keys():
+            joint_number = self._joint_to_name_index[joint]
+            actuated_state[joint] = p.getJointState(self.urdf, joint_number)[0]
+        return actuated_state
 
     def set_actuated_state(self, target):
         if all(key in self._actuated_state_shape.keys()for key in target.keys()):
