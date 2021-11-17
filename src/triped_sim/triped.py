@@ -3,6 +3,24 @@ import pybullet as p
 from triped_sim.triped_base import TripedBase
 
 
+def filter_state_by_leg(leg_number, state):
+    """Filters a robot state dictionary so that only states of a specified leg remain
+
+    Args:
+        leg_number ([type]): the leg whose state should be returned
+        state ([type]): the state that should be filtered
+
+    Returns:
+        [type]: the filtered state
+    """
+    filtered_state = {}
+    leg_name = 'leg_'+str(leg_number)
+    for key, value in state.items():   # iter on both keys and values
+        if key.startswith(leg_name):
+            filtered_state[key] = value
+    return filtered_state
+
+
 class Triped(TripedBase):
 
     def __init__(self, start_position, start_orientation):
@@ -111,7 +129,7 @@ class Triped(TripedBase):
         current_actuated_state = self._kinematic_model.get_actuated_state()
         mapping_arg = {}
         mapping_arg[leg_name+'_closed_chain'] = [
-            self._filter_state_by_leg(leg_number, current_actuated_state)]
+            filter_state_by_leg(leg_number, current_actuated_state)]
         '''
 
         solution = self._inv_kin_solver[leg_number].solve_actuated(
@@ -119,5 +137,4 @@ class Triped(TripedBase):
 
         # the solution also returns a state for the unused legs. This will reset them to zero.
         # these solutions have to be filtered
-        self.set_actuated_state(
-            self._filter_state_by_leg(leg_number, solution))
+        self.set_actuated_state(filter_state_by_leg(leg_number, solution))

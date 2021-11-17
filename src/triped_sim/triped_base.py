@@ -53,23 +53,6 @@ class TripedBase:
         # specified which links are considered the robots feet
         self.foot_links = foot_links
 
-    def _filter_state_by_leg(self, leg_number, state):
-        """Filters a robot state dictionary so that only states of a specified leg remain
-
-        Args:
-            leg_number ([type]): the leg whose state should be returned
-            state ([type]): the state that should be filtered
-
-        Returns:
-            [type]: the filtered state
-        """
-        filtered_state = {}
-        leg_name = 'leg_'+str(leg_number)
-        for key, value in state.items():   # iter on both keys and values
-            if key.startswith(leg_name):
-                filtered_state[key] = value
-        return filtered_state
-
     def reset_robot(self, start_position, start_orientation, joint_values=None):
         """resets the robots joints to 0 and the base to a specified position and orientation
 
