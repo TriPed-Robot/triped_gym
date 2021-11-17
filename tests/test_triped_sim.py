@@ -33,6 +33,9 @@ if __name__ == "__main__":
     input_y = []
     input_z = []
 
+    input_t1_tip = []
+    input_t2_tip = []
+
     reference = []
 
     calculated = []
@@ -50,12 +53,20 @@ if __name__ == "__main__":
         for row in reader:
             reference.append(np.array([float(row[i])
                              for i in range(len(row))]))
+            input_t1_tip.append([float(row[0]), float(row[3]), float(row[6])])
+            input_t2_tip.append([float(row[2]), float(row[5]), float(row[8])])
 
     p.setRealTimeSimulation(1)
     for i in range(len(input_x)):
         row = []
         for leg_number in [0, 1, 2]:
-
+            tip['leg_'+str(leg_number) +
+                '_swing_left'] = input_t1_tip[i][leg_number]
+            tip['leg_'+str(leg_number) +
+                '_swing_right'] = input_t2_tip[i][leg_number]
+            mapping_argument = {'leg_'+str(leg_number)+'_closed_chain': [tip]}
+            robot._inv_kin_solver[leg_number]._robot.pass_group_arg_v_to_a(
+                mapping_argument)
             robot.set_foot_position(leg_number,
                                     [input_x[i][leg_number],
                                      input_y[i][leg_number],
@@ -72,8 +83,8 @@ if __name__ == "__main__":
     p.disconnect()
 
     precision = 0.03
-    # sample_results = [(np.abs(reference[i]-calculated[i]) <
-    #                   precision).all() for i in range(len(reference))]
-    sample_results = [np.abs(reference[i]-calculated[i])
-                      for i in range(len(reference))]
+    sample_results = [(np.abs(reference[i]-calculated[i]) <
+                       precision).all() for i in range(len(reference))]
+    # sample_results = [np.abs(reference[i]-calculated[i])
+    #                  for i in range(len(reference))]
     print(sample_results)
