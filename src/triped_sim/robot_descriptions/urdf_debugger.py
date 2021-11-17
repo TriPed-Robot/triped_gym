@@ -43,7 +43,7 @@ if __name__ == "__main__":
 
     link_name_to_index = {p.getBodyInfo(urdf)[0].decode('UTF-8'): -1, }
     for id in range(p.getNumJoints(urdf)):
-        name = p.getJointInfo(urdf, id)[12].decode('UTF-8')
+        name = p.getJointInfo(urdf, id)[1].decode('UTF-8')
         link_name_to_index[name] = id
     print(link_name_to_index)
 

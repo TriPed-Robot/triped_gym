@@ -106,6 +106,7 @@ class Triped(TripedBase):
         """
 
         # provide the internal closure equation with a tip to stay in the same kinematic mode
+        '''
         current_actuated_state = self._kinematic_model.get_actuated_state()
         mapping_arg = {}
         for i in [0, 1, 2]:
@@ -114,7 +115,15 @@ class Triped(TripedBase):
             tip = {left_actuator: current_actuated_state[left_actuator],
                    right_actuator: current_actuated_state[right_actuator]}
             mapping_arg['leg_'+str(leg_number)+'_closed_chain'] = [tip]
-
+        '''
         solution = self._inv_kin_solver[leg_number].solve_actuated(
-            target, initial_tip=self._kinematic_model.get_virtual_state(), mapping_argument=mapping_arg)
-        self.set_actuated_state(solution)
+            target, initial_tip=self._kinematic_model.get_virtual_state())  # , mapping_argument=mapping_arg)
+
+        # the solution also returns a state for the unused legs. This will reset them to zero.
+        # these solutions have to be filtered
+        leg_specific_solution = {}
+        leg_name = 'leg_'+str(leg_number)
+        for key, value in solution.items():   # iter on both keys and values
+            if key.startswith(leg_name):
+                leg_specific_solution[key] = value
+        self.set_actuated_state(leg_specific_solution)
