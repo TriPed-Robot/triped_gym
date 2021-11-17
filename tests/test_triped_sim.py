@@ -5,7 +5,71 @@ from triped_sim import Triped
 import numpy as np
 
 
-def test_triped_sim():
+def test_actuated_interface():
+    precision = 0.02
+
+    physics_client = p.connect(p.DIRECT)
+    p.setPhysicsEngineParameter(numSolverIterations=1000)
+    start_orientation = p.getQuaternionFromEuler([0, 0, 0])
+    robot = Triped([0, 0, 0], start_orientation)
+
+    p.createConstraint(robot.urdf,
+                       -1, -1, -1,
+                       p.JOINT_FIXED,
+                       [0, 0, 0],
+                       [0, 0, 0],
+                       [0, 0, 0])
+
+    inverse_reference = os.path.join(
+        'tests', 'data', 'joint_values.csv')
+
+    input_t1 = []
+    input_e = []
+    input_t2 = []
+
+    with open(inverse_reference, newline='') as csvfile:
+        reader = csv.reader(csvfile, delimiter=',')
+        for row in reader:
+            input_t1.append(float(row[0]))
+            input_e.append(float(row[1]))
+            input_t2.append(float(row[2]))
+
+    for i in range(len(input_t1)):
+        within_precision = True
+        target_state = {}
+        # set the desired actuated state
+        for leg_number in [0, 1, 2]:
+            target_state['leg_'+str(leg_number) +
+                         '_swing_left'] = input_t1[i]
+            target_state['leg_'+str(leg_number) +
+                         '_extend_joint_ry'] = input_e[i]
+            target_state['leg_'+str(leg_number) +
+                         '_swing_right'] = input_t2[i]
+        robot.set_actuated_state(target_state)
+
+        # update the simulation multiple times.
+        for i in range(100):
+            p.stepSimulation()
+
+        # check if the correct actuated state has been reached
+        leg_row = robot.get_actuated_state()
+        for leg_number in [0, 1, 2]:
+            difference = np.abs([leg_row['leg_'+str(leg_number)+'_swing_left'] -
+                                 target_state['leg_' +
+                                              str(leg_number)+'_swing_left'],
+                                 leg_row['leg_'+str(leg_number)+'_extend_joint_ry'] -
+                                 target_state['leg_' +
+                                              str(leg_number)+'_extend_joint_ry'],
+                                 leg_row['leg_'+str(leg_number)+'_swing_right'] -
+                                 target_state['leg_'+str(leg_number)+'_swing_right']])
+            within_precision = within_precision and all(
+                difference <= precision)
+
+    p.disconnect()
+    assert within_precision
+
+
+def test_foot_interface():
     physics_client = p.connect(p.DIRECT)
     p.setPhysicsEngineParameter(numSolverIterations=1000)
     start_orientation = p.getQuaternionFromEuler([0, 0, 0])
@@ -81,7 +145,7 @@ def test_triped_sim():
     p.disconnect()
 
     # precision is tied to the number of control steps the simulation can perform
-    precision = 0.4
+    precision = 0.2
     sample_results = [(np.abs(reference[i]-calculated[i]) <
                       precision).all() for i in range(1, len(reference))]
     assert all(sample_results)

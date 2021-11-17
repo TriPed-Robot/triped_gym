@@ -1,3 +1,4 @@
+from copy import deepcopy
 from typing import Dict
 import pybullet as p
 from triped_sim.triped_base import TripedBase
@@ -39,6 +40,17 @@ class Triped(TripedBase):
             joint_name = p.getJointInfo(self.urdf, id)[1].decode('UTF-8')
             link_name_to_index[link_name] = id
             self._joint_to_name_index[joint_name] = id
+
+        # set passive joints
+        passive_joints = deepcopy(self._joint_to_name_index)
+        for key in self._actuated_state_shape.keys():
+            del passive_joints[key]
+
+        for joint_index in passive_joints.values():
+            maxForce = 0
+            mode = p.POSITION_CONTROL
+            p.setJointMotorControl2(
+                self.urdf, joint_index, controlMode=mode, force=maxForce)
 
         # closure equation constraints
         for i in [0, 1, 2]:
