@@ -10,32 +10,42 @@ class PlaneEnvA(gym.Env):
     def __init__(self):
         """A simple environment in which the feet of the robot are directly controlled
         """
+        # initial state of the robot
+        self._start_position = [0, 0, 1]
+        self._start_orientation = p.getQuaternionFromEuler([0, 0, 0])
+
+        self._time_step_length = 0.0165/4
+
+        self.done = False
+
         self.physics_client = p.connect(p.GUI)
-        p.setAdditionalSearchPath(pybullet_data.getDataPath())
         p.setGravity(0, 0, -9.81)
         p.setPhysicsEngineParameter(numSolverIterations=1000)
+        p.setTimeStep(self._time_step_length)
+
+        p.setAdditionalSearchPath(pybullet_data.getDataPath())
         planeId = p.loadURDF("plane.urdf")
-        self.start_position = [0, 0, 1]
-        self.start_orientation = p.getQuaternionFromEuler([0, 0, 0])
 
         self.robot = Triped(
-            self.start_position, self.start_orientation)
+            self._start_position, self._start_orientation)
 
         # actions follow convention legi_swing_left, legi_swing_right, leg_iextend_joint_ry
         self.action_space = gym.spaces.box.Box(
-            low=np.array([-0.523599, -0.523599, -0.523599,
+            low=np.array([-1.2, -1.2, -1.2,
                           -0.48869219055, -0.48869219055, -0.48869219055,
-                          -0.523599, -0.523599, -0.523599]),
-            high=np.array([0.523599, 0.523599, 0.523599,
+                          -1.2, -1.2, -1.2]),
+            high=np.array([1.2, 1.2, 1.2,
                            0.0034906585, 0.0034906585, 0.0034906585,
-                           0.523599, 0.523599, 0.523599]))
+                           1.2, 1.2, 1.2]))
 
         # observations made up of chassis orientation, foot positions and ground forces
         observation_range = np.inf * np.ones([3*3+3+3])
         self.observation_space = gym.spaces.box.Box(
             low=-observation_range, high=observation_range)
 
-        self.done = False
+    def set_timestep_length(self, time_step_length):
+        self._time_step_length
+        p.setTimeStep(self._time_step_length)
 
     def _get_reward(self):
         # placeholder reward
@@ -44,7 +54,7 @@ class PlaneEnvA(gym.Env):
     def _is_standing(self):
         position, orientation = self.robot.get_world_state()
         height = position[2]
-        euler_angles = euler_orientation = p.getEulerFromQuaternion(
+        euler_angles = p.getEulerFromQuaternion(
             orientation)
 
         return (height >= 0.4) and (np.abs(euler_angles[1]) <= np.pi*0.5)
@@ -79,7 +89,7 @@ class PlaneEnvA(gym.Env):
 
     def reset(self):
         "gym function resetting the robot to a initial state"
-        self.robot.reset_robot(self.start_position, self.start_orientation)
+        self.robot.reset_robot(self._start_position, self._start_orientation)
         observation = self._get_observation()
         return observation
 
