@@ -1,6 +1,5 @@
 import pybullet as p
 import numpy as np
-import matplotlib.pyplot as plt
 
 
 def render_image(base_pos, cam_dist, cam_yaw, cam_pitch, render_width, render_height):
@@ -19,7 +18,7 @@ def render_image(base_pos, cam_dist, cam_yaw, cam_pitch, render_width, render_he
     (_, _, px, _, _) = p.getCameraImage(
         width=render_width, height=render_height, viewMatrix=view_matrix,
         projectionMatrix=proj_matrix,
-        renderer=p.ER_BULLET_HARDWARE_OPENGL)
+        renderer=p.ER_TINY_RENDERER)
 
     rgb_array = np.array(px)
     rgb_array = rgb_array[:, :, :3]
