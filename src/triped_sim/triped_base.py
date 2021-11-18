@@ -65,7 +65,7 @@ class TripedBase:
             self.urdf, start_position, start_orientation)
 
         if joint_values is None:
-            joint_values = np.zeros(len(self._joint_mappings))
+            joint_values = np.zeros(p.getNumJoints(self.urdf))
         for joint in range(p.getNumJoints(self.urdf)):
             p.resetJointState(self.urdf, joint,
                               targetValue=joint_values[joint])
@@ -86,7 +86,7 @@ class TripedBase:
 
         Returns:
             [type]: a 3 dimensional position and a 4 dimensional quaternion representing
-                                       the desired orientation
+                                       the current orientation
         """
         return p.getBasePositionAndOrientation(self.urdf)
 
@@ -100,7 +100,7 @@ class TripedBase:
             [type]: A 3 dimensional position.
         """
         return trip.get_translation(trip.forward_kinematics(self._kinematic_model,
-                                                            'leg'+str(leg_number)+'_A_LL_Joint_FCS'))
+                                                            'leg_'+str(leg_number)+'_A_LL_Joint_FCS'))
 
     def set_body_state(self, orientation, leg_targets):
         """Allows the control of a robots orientation given the position of all three legs relative

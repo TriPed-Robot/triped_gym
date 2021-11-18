@@ -2,7 +2,7 @@ import gym
 import numpy as np
 import pybullet as p
 import pybullet_data
-from triped_sim import SimplifiedTriped
+from triped_sim import Triped
 
 
 class PlaneEnvA(gym.Env):
@@ -18,7 +18,7 @@ class PlaneEnvA(gym.Env):
         self.start_position = [0, 0, 1]
         self.start_orientation = p.getQuaternionFromEuler([0, 0, 0])
 
-        self.robot = SimplifiedTriped(
+        self.robot = Triped(
             self.start_position, self.start_orientation)
 
         # actions follow convention legi_swing_left, legi_swing_right, leg_iextend_joint_ry
@@ -41,21 +41,29 @@ class PlaneEnvA(gym.Env):
         # placeholder reward
         return 0
 
+    def _is_standing(self):
+        position, orientation = self.robot.get_world_state()
+        height = position[2]
+        euler_angles = euler_orientation = p.getEulerFromQuaternion(
+            orientation)
+
+        return (height >= 0.4) and (np.abs(euler_angles[1]) <= np.pi*0.5)
+
     def _get_observation(self):
         chassis_orientation, foot_positions = self.robot.get_body_state()
         ground_forces = self.robot.get_ground_forces()
         return np.concatenate([chassis_orientation, np.concatenate(foot_positions), ground_forces])
 
     def _apply_action(self, action):
-        new_actuated_state = {'leg0_swing_left': action[0],
-                              'leg1_swing_left': action[1],
-                              'leg2_swing_left': action[2],
-                              'leg0_extend_joint_ry': action[3],
-                              'leg1_extend_joint_ry': action[4],
-                              'leg2_extend_joint_ry': action[5],
-                              'leg0_swing_right': action[6],
-                              'leg1_swing_right': action[7],
-                              'leg2_swing_right': action[8]}
+        new_actuated_state = {'leg_0_swing_left': action[0],
+                              'leg_1_swing_left': action[1],
+                              'leg_2_swing_left': action[2],
+                              'leg_0_extend_joint_ry': action[3],
+                              'leg_1_extend_joint_ry': action[4],
+                              'leg_2_extend_joint_ry': action[5],
+                              'leg_0_swing_right': action[6],
+                              'leg_1_swing_right': action[7],
+                              'leg_2_swing_right': action[8]}
 
         self.robot.set_actuated_state(new_actuated_state)
 
@@ -65,6 +73,7 @@ class PlaneEnvA(gym.Env):
         p.stepSimulation()
         observation = self._get_observation()
         reward = self._get_reward()
+        self.done = self._is_standing()
 
         return observation, reward, self.done, {}
 
