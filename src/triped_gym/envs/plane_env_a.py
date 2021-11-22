@@ -18,7 +18,7 @@ class PlaneEnvA(gym.Env):
 
         self.done = False
 
-        self.physics_client = p.connect(p.GUI)
+        self.physics_client = p.connect(p.DIRECT)
         p.setGravity(0, 0, -9.81)
         p.setPhysicsEngineParameter(numSolverIterations=1000)
         p.setTimeStep(self._time_step_length)
