@@ -14,14 +14,14 @@ class PlaneEnvA(gym.Env):
         self._start_position = [0, 0, 1]
         self._start_orientation = p.getQuaternionFromEuler([0, 0, 0])
 
-        self._time_step_length = 0.0165/4
+        time_step_length = 0.1
 
         self.done = False
 
         self.physics_client = p.connect(p.GUI)
         p.setGravity(0, 0, -9.81)
         p.setPhysicsEngineParameter(numSolverIterations=1000)
-        p.setTimeStep(self._time_step_length)
+        p.setTimeStep(time_step_length)
 
         p.setAdditionalSearchPath(pybullet_data.getDataPath())
         planeId = p.loadURDF("plane.urdf")
@@ -31,12 +31,12 @@ class PlaneEnvA(gym.Env):
 
         # actions follow convention legi_swing_left, legi_swing_right, leg_iextend_joint_ry
         self.action_space = gym.spaces.box.Box(
-            low=np.array([-1.2, -1.2, -1.2,
-                          -0.48869219055, -0.48869219055, -0.48869219055,
-                          -1.2, -1.2, -1.2]),
-            high=np.array([1.2, 1.2, 1.2,
-                           0.0034906585, 0.0034906585, 0.0034906585,
-                           1.2, 1.2, 1.2]))
+            low=np.array([-1.2, -0.48869219055, 0,
+                          -1.2, -0.48869219055, 0,
+                          -1.2, -0.48869219055, 0]),
+            high=np.array([0, 0.0034906585, 1.2,
+                           0, 0.0034906585, 1.2,
+                           0, 0.0034906585, 1.2]))
 
         # observations made up of chassis orientation, foot positions and ground forces
         observation_range = np.inf * np.ones([3*3+3+3])
@@ -44,8 +44,12 @@ class PlaneEnvA(gym.Env):
             low=-observation_range, high=observation_range)
 
     def set_timestep_length(self, time_step_length):
-        self._time_step_length
-        p.setTimeStep(self._time_step_length)
+        """Sets the timestep between subsequent step function calls.
+
+        Args:
+            time_step_length ([type]): The time step when calling the step function
+        """
+        p.setTimeStep(time_step_length)
 
     def _get_reward(self):
         # placeholder reward
@@ -66,13 +70,13 @@ class PlaneEnvA(gym.Env):
 
     def _apply_action(self, action):
         new_actuated_state = {'leg_0_swing_left': action[0],
-                              'leg_1_swing_left': action[1],
-                              'leg_2_swing_left': action[2],
-                              'leg_0_extend_joint_ry': action[3],
+                              'leg_0_extend_joint_ry': action[1],
+                              'leg_0_swing_right': action[2],
+                              'leg_1_swing_left': action[3],
                               'leg_1_extend_joint_ry': action[4],
-                              'leg_2_extend_joint_ry': action[5],
-                              'leg_0_swing_right': action[6],
-                              'leg_1_swing_right': action[7],
+                              'leg_1_swing_right': action[5],
+                              'leg_2_swing_left': action[6],
+                              'leg_2_extend_joint_ry': action[7],
                               'leg_2_swing_right': action[8]}
 
         self.robot.set_actuated_state(new_actuated_state)
