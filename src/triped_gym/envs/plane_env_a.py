@@ -7,7 +7,7 @@ from triped_sim import Triped
 
 class PlaneEnvA(gym.Env):
 
-    def __init__(self):
+    def __init__(self, rendering=False):
         """A simple environment in which the feet of the robot are directly controlled
         """
         # initial state of the robot
@@ -17,8 +17,10 @@ class PlaneEnvA(gym.Env):
         self._time_step_length = 0.1
 
         self.done = False
-
-        self.physics_client = p.connect(p.DIRECT)
+        if rendering is False:
+            self.physics_client = p.connect(p.DIRECT)
+        else:
+            self.physics_client = p.connect(p.GUI)
         p.setGravity(0, 0, -9.81)
         p.setPhysicsEngineParameter(numSolverIterations=1000)
         p.setTimeStep(self._time_step_length)
