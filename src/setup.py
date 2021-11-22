@@ -2,6 +2,8 @@
 import setuptools
 import os
 
+with open("requirements.txt", "r") as fh:
+    requirements = fh.readlines()
 
 setup_py_dir = os.path.dirname(os.path.realpath(__file__))
 
@@ -23,6 +25,7 @@ setuptools.setup(
     author='Jan Baumgärtner',
     license='MIT',
     description='A gym environment for the TriPed robot',
+    install_requires=[req for req in requirements if req[:2] != "# "],
     packages=setuptools.find_packages(),
     package_data={'triped_sim': need_files}
 )
