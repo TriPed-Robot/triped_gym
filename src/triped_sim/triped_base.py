@@ -1,21 +1,24 @@
-from copy import deepcopy
-import pybullet as p
-import trip_kinematics as trip
-from trip_robots.triped import triped
-import numpy as np
 import os
+import numpy as np
+import pybullet as p
+
+from copy import deepcopy
+from typing import Dict
+
+from trip_robots.triped import triped
+import trip_kinematics as trip
 
 
 class TripedBase:
 
     def __init__(self, urdf_model, start_position, start_orientation, foot_links):
-        urdfFlags = p.URDF_USE_SELF_COLLISION_EXCLUDE_ALL_PARENTS
+        urdf_flags = p.URDF_USE_SELF_COLLISION_EXCLUDE_ALL_PARENTS
         dirname = os.path.dirname(__file__)
         urdf_file = os.path.join(
             dirname, 'robot_descriptions', urdf_model)
         self.urdf = p.loadURDF(urdf_file,
                                start_position, start_orientation,
-                               flags=urdfFlags,
+                               flags=urdf_flags,
                                useFixedBase=False)
 
         # possible virtual state joint_targets
@@ -52,6 +55,52 @@ class TripedBase:
 
         # specified which links are considered the robots feet
         self.foot_links = foot_links
+
+    def get_virtual_state(self):
+        """ [Placeholder]
+        Returns the position ofthe virtual state following trip_kinematics conventions
+
+        Returns:
+            Dict[str,Dict[str,float]]: A virtual state following trip_kinematics conventions
+        """
+        pass
+
+    def set_virtual_state(self, target: Dict[str, Dict[str, float]]):
+        """ [Placeholder]
+        Sets the target position the virtual state following Trip_kinematics conventions.
+
+        Args:
+            target (Dict[str, Dict[str, float]]): valid joint states, note that not all states need
+                                                 to be supplied.
+
+        Raises:
+            ValueError: If the specified joint state is not valid
+        """
+        pass
+
+    def get_actuated_state(self):
+        """ [Placeholder]
+        Returns the position of the robots actuated joints.
+
+        Returns:
+            Dict[str,float]: A actuated state following trip_kinematics conventions
+        """
+        pass
+
+    def set_foot_position(self, leg_number, target):
+        """ [Placeholder]
+        Allows the position control of a leg of the TriPed.
+        Kinematic calculations are performed using TriP, although pybullet is also capable
+        of computing inverse kinematics.
+
+        Note that TriPs inverse kinematic solevers can sometimes be unstable, so use this interface
+        with caution.
+
+        Args:
+            leg_number ([type]): The leg which is to be controlled, numbered from zero to two.
+            target ([type]): A 3 dimensional target position.
+        """
+        pass
 
     def reset_robot(self, start_position, start_orientation, joint_values=None):
         """resets the robots joints to 0 and the base to a specified position and orientation
@@ -99,8 +148,9 @@ class TripedBase:
         Returns:
             [type]: A 3 dimensional position.
         """
-        return trip.get_translation(trip.forward_kinematics(self._kinematic_model,
-                                                            'leg_'+str(leg_number)+'_A_LL_Joint_FCS'))
+        return trip.get_translation(
+            trip.forward_kinematics(self._kinematic_model,
+                                    'leg_'+str(leg_number)+'_A_LL_Joint_FCS'))
 
     def set_body_state(self, orientation, leg_targets):
         """Allows the control of a robots orientation given the position of all three legs relative

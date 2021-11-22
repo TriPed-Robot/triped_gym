@@ -35,11 +35,11 @@ class Triped(TripedBase):
         link_name_to_index = {p.getBodyInfo(
             self.urdf)[0].decode('UTF-8'): -1, }
         self._joint_to_name_index = {}
-        for id in range(p.getNumJoints(self.urdf)):
-            link_name = p.getJointInfo(self.urdf, id)[12].decode('UTF-8')
-            joint_name = p.getJointInfo(self.urdf, id)[1].decode('UTF-8')
-            link_name_to_index[link_name] = id
-            self._joint_to_name_index[joint_name] = id
+        for joint_id in range(p.getNumJoints(self.urdf)):
+            link_name = p.getJointInfo(self.urdf, joint_id)[12].decode('UTF-8')
+            joint_name = p.getJointInfo(self.urdf, joint_id)[1].decode('UTF-8')
+            link_name_to_index[link_name] = joint_id
+            self._joint_to_name_index[joint_name] = joint_id
 
         # set passive joints
         passive_joints = deepcopy(self._joint_to_name_index)
@@ -117,6 +117,15 @@ class Triped(TripedBase):
         return actuated_state
 
     def set_actuated_state(self, target):
+        """Sets the position of the actuated joints
+
+        Args:
+            target ([type]): valid joint states, note that not all states need
+                             to be supplied
+
+        Raises:
+            ValueError: If the specified joint state is not valid
+        """
         if all(key in self._actuated_state_shape.keys()for key in target.keys()):
             for actuator_name, actuator_target in target.items():
                 joint_number = self._joint_to_name_index[actuator_name]

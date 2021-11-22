@@ -14,17 +14,17 @@ class PlaneEnvA(gym.Env):
         self._start_position = [0, 0, 1]
         self._start_orientation = p.getQuaternionFromEuler([0, 0, 0])
 
-        time_step_length = 0.1
+        self._time_step_length = 0.1
 
         self.done = False
 
         self.physics_client = p.connect(p.GUI)
         p.setGravity(0, 0, -9.81)
         p.setPhysicsEngineParameter(numSolverIterations=1000)
-        p.setTimeStep(time_step_length)
+        p.setTimeStep(self._time_step_length)
 
         p.setAdditionalSearchPath(pybullet_data.getDataPath())
-        planeId = p.loadURDF("plane.urdf")
+        p.loadURDF("plane.urdf")
 
         self.robot = Triped(
             self._start_position, self._start_orientation)
@@ -49,7 +49,16 @@ class PlaneEnvA(gym.Env):
         Args:
             time_step_length ([type]): The time step when calling the step function
         """
+        self._time_step_length = time_step_length
         p.setTimeStep(time_step_length)
+
+    def get_timestep_length(self):
+        """Sets the timestep between subsequent step function calls.
+
+        Returns:
+            [type]: The time step
+        """
+        return self._time_step_length
 
     def _get_reward(self):
         # placeholder reward

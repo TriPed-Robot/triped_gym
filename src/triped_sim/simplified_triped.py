@@ -85,6 +85,15 @@ class SimplifiedTriped(TripedBase):
         return self._kinematic_model.get_actuated_state()
 
     def set_actuated_state(self, target):
+        """Sets the position of the actuated joints
+
+        Args:
+            target ([type]): valid joint states, note that not all states need
+                             to be supplied
+
+        Raises:
+            ValueError: If the specified joint state is not valid
+        """
         if all(key in self._actuated_state_shape.keys()for key in target.keys()):
             self._kinematic_model.set_actuated_state(target)
             virtual_state = self._kinematic_model.get_virtual_state()
