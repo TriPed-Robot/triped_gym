@@ -29,25 +29,19 @@ def calculate_swing_joints(number):
           str(right_swing_angle)+", xyz = "+right_origin)
 
 
-if __name__ == "__main__":
-    physics_client = p.connect(p.GUI)
+def visualize_urdf_model():
+    p.connect(p.GUI)
     p.setPhysicsEngineParameter(numSolverIterations=1000)
+
     start_position = [0, 0, 1]
     start_orientation = p.getQuaternionFromEuler([0, 0, 0])
-    dirname = os.path.dirname(__file__)
-    urdf_file = os.path.join(dirname, "triped.urdf")
+
+    base_path = os.path.dirname(os.path.dirname(__file__))
+    urdf_file = os.path.join(
+        base_path, 'src', 'triped_sim', 'robot_descriptions', 'triped.urdf')
+
     urdf = p.loadURDF(urdf_file,
                       start_position, start_orientation)
-
-    # find the link indexes to create the constraints of the closed chain
-
-    link_name_to_index = {p.getBodyInfo(urdf)[0].decode('UTF-8'): -1, }
-    for id in range(p.getNumJoints(urdf)):
-        name = p.getJointInfo(urdf, id)[1].decode('UTF-8')
-        link_name_to_index[name] = id
-    print(link_name_to_index)
-
-    joint_number = p.getNumJoints(urdf)
 
     p.createConstraint(urdf,
                        -1, -1, -1,
@@ -56,12 +50,19 @@ if __name__ == "__main__":
                        [0, 0, 0],
                        [0, 0, 1])
 
-    # leg_0 drive module
-    for i in [0, 1, 2]:
-        print("created constraint for leg "+str(i))
+    # find the link indexes to create the constraints of the closed chain
+    link_name_to_index = {p.getBodyInfo(urdf)[0].decode('UTF-8'): -1, }
+    joint_to_name_index = {}
+    for joint_id in range(p.getNumJoints(urdf)):
+        link_name = p.getJointInfo(urdf, joint_id)[12].decode('UTF-8')
+        joint_name = p.getJointInfo(urdf, joint_id)[1].decode('UTF-8')
+        link_name_to_index[link_name] = joint_id
+        joint_to_name_index[joint_name] = joint_id
 
+    for i in [0, 1, 2]:
         p.createConstraint(urdf,
-                           link_name_to_index['leg_'+str(i)+'_drive_module'],
+                           link_name_to_index['leg_' +
+                                              str(i)+'_drive_module'],
                            urdf,
                            link_name_to_index['leg_' +
                                               str(i)+'_rotZ_drive_module_left'],
@@ -71,7 +72,8 @@ if __name__ == "__main__":
                            [0, 0, 0])
 
         p.createConstraint(urdf,
-                           link_name_to_index['leg_'+str(i)+'_drive_module'],
+                           link_name_to_index['leg_' +
+                                              str(i)+'_drive_module'],
                            urdf,
                            link_name_to_index['leg_' +
                                               str(i)+'_rotZ_drive_module_right'],
@@ -80,15 +82,9 @@ if __name__ == "__main__":
                            [0.015-0.0259, 0.029-0.0507, -0.0965-0.0455],
                            [0, 0, 0])
 
-    # calculate_swing_joints(0)
-    # calculate_swing_joints(1)
-    # calculate_swing_joints(2)
-
     p.setRealTimeSimulation(1)
 
-    joint_number = p.getNumJoints(urdf)
     for i in range(10000):
-
         p.setJointMotorControl2(urdf, 0, p.POSITION_CONTROL,
                                 force=800,
                                 targetPosition=0)
@@ -98,3 +94,11 @@ if __name__ == "__main__":
 
         time.sleep(1./200.)
     p.disconnect()
+
+
+if __name__ == "__main__":
+    calculate_swing_joints(0)
+    calculate_swing_joints(1)
+    calculate_swing_joints(2)
+
+    visualize_urdf_model()
