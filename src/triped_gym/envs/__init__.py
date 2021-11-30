@@ -1,1 +1,1 @@
-from triped_gym.envs.plane_env_a import TestEnv
+from triped_gym.envs.test_env import TestEnv
