@@ -8,14 +8,14 @@ import triped_gym
 
 
 def test_step_causality():
-    """This function tests wheter actions have the desired 
+    """This function tests wheter actions have the desired
        causal effect on the foot position observation.
     """
     precision = 0.12
 
     action_consequence_causal = True
 
-    env = gym.make('TriPed-v0')
+    env = gym.make('TriPedTest-v0')
     env.reset()
 
     forward_reference = open(os.path.join(
@@ -35,3 +35,7 @@ def test_step_causality():
 
     env.close()
     assert action_consequence_causal
+
+
+if __name__ == '__main__':
+    test_step_causality()

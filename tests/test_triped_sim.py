@@ -149,3 +149,8 @@ def test_foot_interface():
     sample_results = [(np.abs(reference[i]-calculated[i]) <
                       precision).all() for i in range(1, len(reference))]
     assert all(sample_results)
+
+
+if __name__ == '__main__':
+    test_actuated_interface()
+    test_foot_interface()
