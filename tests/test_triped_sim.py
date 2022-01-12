@@ -1,8 +1,9 @@
-import pybullet as p
-import os
 import csv
-from triped_sim import Triped
+import os
+
 import numpy as np
+import pybullet as p
+from triped_sim import Triped
 
 
 def test_actuated_interface():

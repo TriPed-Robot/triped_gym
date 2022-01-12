@@ -1,11 +1,11 @@
 """
 This script contains helper functions to debug the URDF of the full triped model
 """
-import pybullet as p
 import os
-from math import pi, sin, cos
 import time
-from math import sin
+from math import cos, pi, sin
+
+import pybullet as p
 
 
 def calculate_swing_joints(number):

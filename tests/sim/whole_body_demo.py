@@ -1,8 +1,8 @@
 import time
+
+import numpy as np
 import pybullet as p
 import pybullet_data
-import numpy as np
-
 from triped_sim import SimplifiedTriped
 
 """This short demo showcases the full body control of the TriPed

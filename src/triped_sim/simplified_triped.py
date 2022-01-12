@@ -1,5 +1,7 @@
 from typing import Dict
+
 import pybullet as p
+
 from triped_sim.triped_base import TripedBase
 
 

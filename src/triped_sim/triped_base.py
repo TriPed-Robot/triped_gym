@@ -1,12 +1,11 @@
 import os
-import numpy as np
-import pybullet as p
-
 from copy import deepcopy
 from typing import Dict
 
-from trip_robots.triped import triped
+import numpy as np
+import pybullet as p
 import trip_kinematics as trip
+from trip_robots.triped import triped
 
 
 class TripedBase:
