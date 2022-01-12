@@ -1,8 +1,9 @@
 import time
+
 import pybullet as p
 import pybullet_data
-
 from triped_sim import SimplifiedTriped
+
 from circular_walker import CircularWalker
 
 """This short demo uses the CircularWalker gait pattern generator

@@ -1,6 +1,7 @@
 # setup.py
-import setuptools
 import os
+
+import setuptools
 
 with open("requirements.txt", "r") as fh:
     requirements = fh.readlines()

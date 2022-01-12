@@ -8,7 +8,7 @@ class PositionControlledEnv(gym.Env):
 
     def __init__(self, rendering=False):
         """A simple environment in which the desired position of the actuators can be directly set
-
+ 
         The environment only includes a robot and not surroundings.
         It also provides only a abstract reward function.
         To use the environment _get_reward(self): needs to be defined.
